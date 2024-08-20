@@ -23,7 +23,7 @@
         <div class="w-full md:w-1/2">
             <h2 class="text-xl font-bold text-center mb-6">Se connecter en tant qu'Admin</h2>
 
-            <form id="loginForm" class="space-y-6">
+            <form action="action.php" method="post" id="loginForm" class="space-y-6">
                 <div class="relative">
                     <label for="identifiant" class="block text-sm font-bold text-gray-700">Identifiant</label>
                     <input type="text" id="identifiant" name="identifiant" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#16C8FF] focus:border-[#16C8FF] sm:text-sm" required>
