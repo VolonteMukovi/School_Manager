@@ -1,6 +1,8 @@
-<?php include("..//DataBase/connexion_DB.php");include("commande.php") ?>
+<?php include("..//DataBase/connexion_DB.php");
+include("commande.php") ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +10,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-       
+
     </style>
 </head>
+
 <body class="bg-[#16C8FF] min-h-screen flex flex-col items-center justify-center">
     <header class="w-full bg-white p-4 shadow-md fixed top-0 left-0">
         <h1 class="text-2xl font-bold text-left text-gray-500">School Manager</h1>
@@ -37,22 +40,19 @@
                     <i class="fas fa-lock absolute top-1/2 mt-3  transform -translate-y-1/2 right-3 text-gray-400"></i>
                 </div>
                 <?php
-                    if(isset($_POST["btn_login"]))
-                    {
-                        $pseudo = htmlspecialchars($_POST["identifiant"]);
-                        $pwd = htmlspecialchars($_POST["password"]);
-                        loginAdmin($db,$pseudo,$pwd);
-                        if(loginAdmin($db,$pseudo,$pwd)==TRUE)
-                        {
-                            header("location: dasboard.php");
-                        }
-                        else{?>
-                                <div id="errorMessage" class="hidde bg-red-500 text-white text-center py-2 rounded-md">
-                                    <p>Votre Nom D'identification Ou Mot De Passe Est Icorrect !</p>
-                                </div>
-                       <?php }
-                    }
-                    
+                if (isset($_POST["btn_login"])) {
+                    $pseudo = htmlspecialchars($_POST["identifiant"]);
+                    $pwd = htmlspecialchars($_POST["password"]);
+                    loginAdmin($db, $pseudo, $pwd);
+                    if (loginAdmin($db, $pseudo, $pwd) == TRUE) {
+                        header("location: dasboard.php");
+                    } else { ?>
+                        <div id="errorMessage" class="hidde bg-red-500 text-white text-center py-2 rounded-md">
+                            <p>Votre Nom D'identification Ou Mot De Passe Est Incorrect !</p>
+                        </div>
+                <?php }
+                }
+
                 ?>
 
 
@@ -75,4 +75,5 @@
         }); -->
     </script>
 </body>
+
 </html>

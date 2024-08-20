@@ -72,7 +72,7 @@
                         </a>
                     </li>
                     <li class="px-6 py-2 hover:bg-gray-700">
-                        <a href="#" class="flex items-center">
+                        <a href="deconnexion.php" class="flex items-center">
                             <i class="fas fa-sign-out-alt mr-3"></i> Se déconnecter
                         </a>
                     </li>
