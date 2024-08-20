@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 min-h-screen flex">
+<body class="bg-gray-100 min-h-screen flex" style="min-height:100%">
     <aside class="w-64 bg-gray-800 text-white flex flex-col h-screen flex-shrink-0">
         <div class="flex items-center p-4">
             <i class="fas fa-school text-2xl mr-2"></i> 

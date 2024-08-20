@@ -47,9 +47,7 @@
         </div>
     </div>
 
-    <!-- Content -->
     <div class="flex-1 flex flex-col overflow-hidden">
-        <!-- Navbar -->
         <div class="bg-white shadow">
         <div class="flex justify-between items-center py-4 px-2">
                     <button class="text-gray-500 hover:text-gray-600" id="open-sidebar">
@@ -65,7 +63,6 @@
                     </div>                   
                 </div>
         </div>
-        <!-- Content Body -->
         <div class="flex-1 overflow-auto p-4">
         <main class="p-6">
                 <h1 class="text-2xl font-semibold text-center mb-8">Ajouter un Nouveau Travail</h1>
@@ -105,7 +102,6 @@ openSidebarButton.addEventListener('click', (e) => {
     sidebar.classList.toggle('-translate-x-full');
 });
 
-// Close the sidebar when clicking outside of it
 document.addEventListener('click', (e) => {
     if (!sidebar.contains(e.target) && !openSidebarButton.contains(e.target)) {
         sidebar.classList.add('-translate-x-full');

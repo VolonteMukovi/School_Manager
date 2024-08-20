@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div class="flex">
-        <aside class="w-64 bg-gray-800 text-white flex flex-col h-screen" >
+        <aside class="w-64 bg-gray-800 text-white flex flex-col h-screen" style="min-height:100%">
             <div class="flex items-center m-4">
                 <i class="fas fa-school text-2xl mr-2"></i> 
                 <span class="text-xl font-semibold">School Manager</span>

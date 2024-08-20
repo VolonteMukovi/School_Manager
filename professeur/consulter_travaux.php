@@ -47,9 +47,7 @@
         </div>
     </div>
 
-   <!-- Content -->
    <div class="flex-1 flex flex-col overflow-hidden">
-        <!-- Navbar -->
         <div class="bg-white shadow">
             <div class="flex justify-between items-center py-4 px-2">
                 <button class="text-gray-500 hover:text-gray-600" id="open-sidebar">
@@ -66,7 +64,6 @@
             </div>
         </div>
 
-        <!-- Content Body -->
         <div class="flex-1 overflow-auto p-4">
             <main class="p-6">
                 <h1 class="text-2xl font-semibold mb-6">Consulter les Travaux</h1>
@@ -77,7 +74,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-16">
-                    <!-- Example Card -->
                     <div class="bg-white p-4 rounded shadow-md flex flex-col">
                         <div class="flex items-center mb-4">
                             <i class="fas fa-hashtag text-gray-500 mr-3"></i>
@@ -138,7 +134,6 @@
                             </a>
                         </div>
                     </div>
-                    <!-- Add more cards here -->
                 </div>
             </main>
         </div>
@@ -154,7 +149,6 @@ openSidebarButton.addEventListener('click', (e) => {
     sidebar.classList.toggle('-translate-x-full');
 });
 
-// Close the sidebar when clicking outside of it
 document.addEventListener('click', (e) => {
     if (!sidebar.contains(e.target) && !openSidebarButton.contains(e.target)) {
         sidebar.classList.add('-translate-x-full');

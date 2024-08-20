@@ -11,7 +11,6 @@
 
 <body class="min-h-screen bg-gray-100">
     <div class="h-screen flex overflow-hidden">
-        <!-- Sidebar -->
         <div class="absolute bg-gray-800 text-white w-56 min-h-screen overflow-y-auto transition-transform transform -translate-x-full ease-in-out duration-300"
             id="sidebar">
             <div class="p-4">
@@ -46,7 +45,6 @@
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <div class="bg-white shadow">
                 <div class="flex justify-between items-center py-4 px-2">

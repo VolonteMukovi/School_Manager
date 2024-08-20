@@ -11,17 +11,13 @@
 
 <body class="bg-gray-100 min-h-screen">
     <div class="flex">
-        <!-- Inclure la barre latérale -->
         <?php include "sidebar.php"; ?>
 
         <div class="flex-1">
-            <!-- Inclure le header -->
             <?php include "header.php"; ?>
 
             <main class="p-6">
-                <!-- Division principale -->
                 <div class="bg-white p-6 rounded-lg shadow-md border border-gray-300">
-                    <!-- Informations sur la subdivision -->
                     <div class="mb-6">
                         <p class="text-gray-700 font-semibold">Subdivision:</p>
                         <div class="bg-gray-200 p-4 border border-gray-300 rounded">
@@ -29,7 +25,6 @@
                         </div>
                     </div>
 
-                    <!-- Informations sur les subdivisions -->
                     <div class="mb-6">
                         <p class="text-gray-700 font-semibold">Subdivisions:</p>
                         <div class="bg-gray-200 p-4 border border-gray-300 rounded">
@@ -37,7 +32,6 @@
                         </div>
                     </div>
 
-                    <!-- Informations sur les pourcentages -->
                     <div>
                         <p class="text-gray-700 font-semibold">Pourcentage:</p>
                         <div class="bg-gray-200 p-4 border border-gray-300 rounded">
