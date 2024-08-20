@@ -1,3 +1,4 @@
+<?php include("..//DataBase/connexion_DB.php");include("commande.php") ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -23,7 +24,7 @@
         <div class="w-full md:w-1/2">
             <h2 class="text-xl font-bold text-center mb-6">Se connecter en tant qu'Admin</h2>
 
-            <form action="action.php" method="post" id="loginForm" class="space-y-6">
+            <form method="post" id="loginForm" class="space-y-6">
                 <div class="relative">
                     <label for="identifiant" class="block text-sm font-bold text-gray-700">Identifiant</label>
                     <input type="text" id="identifiant" name="identifiant" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#16C8FF] focus:border-[#16C8FF] sm:text-sm" required>
@@ -35,17 +36,32 @@
                     <input type="password" id="password" name="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#16C8FF] focus:border-[#16C8FF] sm:text-sm" required>
                     <i class="fas fa-lock absolute top-1/2 mt-3  transform -translate-y-1/2 right-3 text-gray-400"></i>
                 </div>
+                <?php
+                    if(isset($_POST["btn_login"]))
+                    {
+                        $pseudo = htmlspecialchars($_POST["identifiant"]);
+                        $pwd = htmlspecialchars($_POST["password"]);
+                        loginAdmin($db,$pseudo,$pwd);
+                        if(loginAdmin($db,$pseudo,$pwd)==TRUE)
+                        {
+                            header("location: dasboard.php");
+                        }
+                        else{?>
+                                <div id="errorMessage" class="hidde bg-red-500 text-white text-center py-2 rounded-md">
+                                    <p>Votre Nom D'identification Ou Mot De Passe Est Icorrect !</p>
+                                </div>
+                       <?php }
+                    }
+                    
+                ?>
 
-                <div id="errorMessage" class="hidden bg-red-500 text-white text-center py-2 rounded-md">
-                    Mot de passe incorrect
-                </div>
 
-                <button type="submit" class="btn w-full bg-gray-800  text-white py-2 rounded-md font-semibold hover:bg-gray-700 ">Se connecter</button>
+                <button name="btn_login" type="submit" class="btn w-full bg-gray-800  text-white py-2 rounded-md font-semibold hover:bg-gray-700 ">Se connecter</button>
             </form>
         </div>
     </main>
 
-    <script>
+    <!-- <script>
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -56,7 +72,7 @@
             } else {
                 document.getElementById('errorMessage').classList.add('hidden');
             }
-        });
+        }); -->
     </script>
 </body>
 </html>
