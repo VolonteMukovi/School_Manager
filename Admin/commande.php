@@ -168,3 +168,16 @@ function saveOption($db,$designation_option,$id_section)
         $e->getMessage();
     }
 }
+
+
+// ==================================================================== SECTIONS ===============================================================
+function saveSection($db,$designation_section)
+{
+    try {
+        $req = $db->prepare("INSERT INTO `tb_section`(`designation_section`) VALUES (?)");
+        $req->execute(array($designation_section));
+        header("location: ajout_section.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}

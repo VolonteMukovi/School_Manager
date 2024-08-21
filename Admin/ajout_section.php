@@ -17,7 +17,7 @@
             <main class="p-6">
                 <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Ajouter une Section</h2>
 
-                <form class="bg-white p-6 rounded shadow-md w-full max-w-lg mx-auto">
+                <form method="post" action="action.php" class="bg-white p-6 rounded shadow-md w-full max-w-lg mx-auto">
                     <div class="mb-4 flex items-center">
                         <div class="w-full">
                             <label for="designation" class="block text-gray-700 font-semibold mb-2">Désignation</label>
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
+                        <button name="btnSaveSection" type="submit" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
                             Ajouter
                         </button>
                     </div>

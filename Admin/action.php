@@ -43,6 +43,7 @@ if (isset($_POST["btnAjoutClasses"])) {
 
 
 
+
 // ==================================================================== OPTION ===============================================================
 
 
@@ -51,3 +52,14 @@ if (isset($_POST["btnSaveOption"])) {
     $section = htmlspecialchars($_POST["section"]);
     saveOption($db,$designation,$section);
 }
+
+
+
+// ==================================================================== SECTION ===============================================================
+
+
+if (isset($_POST["btnSaveSection"])) {
+    $designation = htmlspecialchars(ucwords($_POST["designation"]));
+    saveSection($db,$designation);
+}
+
