@@ -40,36 +40,36 @@
             <h1 class="text-2xl font-bold text-center text-gray-700 mb-6">Ajouter un élève</h1>
 
             <div class="flex">
-                <form class="w-2/3 bg-white p-6 rounded shadow-md flex flex-wrap ml-6">
+                <form action="action.php" method="post" class="w-2/3 bg-white p-6 rounded shadow-md flex flex-wrap ml-6" enctype="multipart/form-data">
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="matricule">
                             <i class="fas fa-id-badge mr-2"></i> Matricule
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="matricule" type="text" placeholder="Matricule">
+                        <input required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="matricule" id="matricule" type="text" placeholder="Matricule">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="code">
                             <i class="fas fa-key mr-2"></i> Code
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code" type="text" placeholder="Code">
+                        <input required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="code" id="code" type="text" placeholder="Code">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="nom">
                             <i class="fas fa-user mr-2"></i> Nom
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nom" type="text" placeholder="Nom">
+                        <input required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="nom" id="nom" type="text" placeholder="Nom">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="postnom">
                             <i class="fas fa-user mr-2"></i> Postnom
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="postnom" type="text" placeholder="Postnom">
+                        <input required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="postnom" id="postnom" type="text" placeholder="Postnom">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="section">
                             <i class="fas fa-building mr-2"></i> Section
                         </label>
-                        <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="section">
+                        <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="section" id="section">
                             <option value="section1">Section 1</option>
                             <option value="section2">Section 2</option>
                             <option value="section3">Section 3</option>
@@ -79,7 +79,7 @@
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="classe">
                             <i class="fas fa-chalkboard-teacher mr-2"></i> Classe
                         </label>
-                        <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="classe">
+                        <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"  name="classe" id="classe">
                             <option value="classe1">Classe 1</option>
                             <option value="classe2">Classe 2</option>
                             <option value="classe3">Classe 3</option>
@@ -89,7 +89,7 @@
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="option">
                             <i class="fas fa-graduation-cap mr-2"></i> Option
                         </label>
-                        <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="classe">
+                        <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="option" id="option">
                             <option value="classe1">Classe 1</option>
                             <option value="classe2">Classe 2</option>
                             <option value="classe3">Classe 3</option>
@@ -99,10 +99,10 @@
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="photo">
                             <i class="fas fa-camera mr-2"></i> Photo
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="photo" type="file" accept="image/*" onchange="previewPhoto(event)">
+                        <input required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="photo" id="photo" type="file" accept="image/*" onchange="previewPhoto(event)">
                     </div>
                     <div class="w-full px-3 mb-6 flex justify-end">
-                        <button class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
+                        <button name="btnSaveEleve" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
                             Enregistrer
                         </button>
                     </div>
