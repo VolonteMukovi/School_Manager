@@ -46,17 +46,17 @@
     </main>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        // document.getElementById('loginForm').addEventListener('submit', function(event) {
+        //     event.preventDefault();
 
-            const password = document.getElementById('password').value;
+        //     const password = document.getElementById('password').value;
 
-            if (password !== 'correctPassword') {
-                document.getElementById('errorMessage').classList.remove('hidden');
-            } else {
-                document.getElementById('errorMessage').classList.add('hidden');
-            }
-        });
+        //     if (password !== 'correctPassword') {
+        //         document.getElementById('errorMessage').classList.remove('hidden');
+        //     } else {
+        //         document.getElementById('errorMessage').classList.add('hidden');
+        //     }
+        // });
     </script>
 </body>
 </html>
