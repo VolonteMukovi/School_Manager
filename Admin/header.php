@@ -1,3 +1,7 @@
+<?php 
+        include("..//DataBase/connexion_DB.php");
+        include("commande.php")
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

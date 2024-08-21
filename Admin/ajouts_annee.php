@@ -13,7 +13,7 @@
     <div class="flex">
         <aside class=" bg-gray-800 text-white min-h-screen p-4">
             <nav class="">
-                <?php include "sidebar.php";include("..//DataBase/connexion_DB.php"); include("commande.php") ?>
+                <?php include "sidebar.php" ?>
             </nav>
         </aside>
         <div class="flex-1">
@@ -46,7 +46,7 @@
                     <div class="flex justify-center">
                         <div class="w-full max-w-lg">
                             <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Ajouter une Année Scolaire</h2>
-                            <?php $affWhere = clotureAnneWhere($db);
+                            <?php $affWhere = anneeEncours($db);
                             ?>
                             <form method="post" action="action.php" class="bg-white p-6 rounded shadow-md w-full">
                                 <?php  foreach($affWhere as $annee) { ?>

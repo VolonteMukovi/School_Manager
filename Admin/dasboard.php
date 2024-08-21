@@ -11,9 +11,7 @@
 
 <body class="bg-gray-100 min-h-screen">
     <div class="flex">
-        <?php include "sidebar.php";
-        include("..//DataBase/connexion_DB.php");
-        include("commande.php") ?>
+        <?php include "sidebar.php" ?>
 
 
         <div class="flex-grow ">
