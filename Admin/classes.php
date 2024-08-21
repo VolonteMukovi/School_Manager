@@ -34,27 +34,31 @@
                             <th class="py-3 px-6 text-center">Actions</th>
                         </tr>
                     </thead>
+                    <?php $listeClass = afficheClasses($db);   ?>
                     <tbody class="text-gray-600 text-sm font-light">
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-6 text-center whitespace-nowrap">001</td>
-                            <td class="py-3 px-6 text-center">6 ieme A</td>
-                            <td class="py-3 px-6 text-center">Scientifique</td>
-                            <td class="py-3 px-6 text-center">EXAU</td>
-                            <td class="py-3 px-6 text-center">45</td>
-                            <td class="py-3 px-6 text-center">
-                                <div class="flex item-center justify-center">
-                                    <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                    <a href="consulter_classes.php" class="w-4 transform hover:text-blue-500 hover:scale-110">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php foreach ($listeClass as $classe) {  ?>
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-center whitespace-nowrap"><?php echo $classe->ID_classes  ?></td>
+                                <td class="py-3 px-6 text-center"><?php echo $classe->designation_classes  ?></td>
+                                <td class="py-3 px-6 text-center"><?php echo $classe->designation_option  ?></td>
+                                <td class="py-3 px-6 text-center"><?php echo $classe->Nom_prof."  ".$classe->PostNom_prof  ?></td>
+                                <td class="py-3 px-6 text-center">45</td>
+                                <td class="py-3 px-6 text-center">
+                                    <div class="flex item-center justify-center">
+                                        <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        <a href="consulter_classes.php" class="w-4 transform hover:text-blue-500 hover:scale-110">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php  } ?>
+
                     </tbody>
                 </table>
             </div>

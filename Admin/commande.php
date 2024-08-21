@@ -131,7 +131,7 @@ function saveEleve($db, $matricule, $nom, $postnom, $code, $section, $option, $c
     }
 }
 
-function AfficheEleve($db)
+function afficheEleve($db)
 {
     try {
         $req = $db->query("SELECT * FROM `tb_adnim`");
@@ -155,6 +155,17 @@ function saveClasses($db,$designation_class,$id_section,$id_option,$titulaire_cl
     }
 }
 
+function afficheClasses($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_classes` INNER JOIN tb_section ON tb_section.ID_section=tb_classes.id_section INNER JOIN tb_option ON tb_option.ID_option=tb_classes.id_option INNER JOIN tb_professeur ON tb_professeur.ID_prof=tb_classes.titulaire_classes");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
 
 
 // ==================================================================== OPTIONS ===============================================================
@@ -169,6 +180,16 @@ function saveOption($db,$designation_option,$id_section)
     }
 }
 
+function afficheOption($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_option`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
 
 // ==================================================================== SECTIONS ===============================================================
 function saveSection($db,$designation_section)
@@ -177,6 +198,17 @@ function saveSection($db,$designation_section)
         $req = $db->prepare("INSERT INTO `tb_section`(`designation_section`) VALUES (?)");
         $req->execute(array($designation_section));
         header("location: ajout_section.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function afficheSection($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_section`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -216,5 +248,17 @@ function saveProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
         }
     } else {
         echo "Votre image n'as pas pu etre trouver ou elle eroner rassayer svp";
+    }
+}
+
+
+function afficheProf($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_professeur`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
     }
 }

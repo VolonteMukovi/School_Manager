@@ -31,11 +31,13 @@
                         <label for="option" class="block text-gray-700 font-bold mb-2">
                             <i class="fas fa-book mr-2"></i>Option
                         </label>
+                        <?php  $afficheOption = afficheOption($db); ?>
                         <select id="option" name="option" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                             <option value="">Sélectionnez une option</option>
-                            <option value="Scientifique">Scientifique</option>
-                            <option value="Littéraire">Littéraire</option>
-                            <option value="Commerciale">Commerciale</option>
+                            <?php foreach($afficheOption as $option){?>
+                            <option value="<?php echo $option->ID_option ?>"><?php echo $option->designation_option ?></option>
+                           <?php }  ?>
+
                         </select>
                     </div>
 
@@ -43,12 +45,12 @@
                         <label for="section" class="block text-gray-700 font-bold mb-2">
                             <i class="fas fa-building mr-2"></i>Section
                         </label>
+                           <?php  $affichesection = afficheSection($db); ?>
                         <select id="section" name="section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                             <option value="">Sélectionnez une section</option>
-                            <option value="scientifique">scientifique/option>
-                            <option value="scientifique">scientifique</option>
-                            <option value="scientifique">scientifique</option>
-                            
+                            <?php foreach($affichesection as $section){?>
+                            <option value="<?php echo $section->ID_section ?>"><?php echo $section->designation_section ?></option>
+                           <?php }  ?>    
                         </select>
                     </div>
 
@@ -56,10 +58,12 @@
                         <label for="titulaire" class="block text-gray-700 font-bold mb-2">
                             <i class="fas fa-chalkboard-teacher mr-2"></i>Titulaire
                         </label>
+                        <?php  $afficheProf = afficheProf($db); ?>
                         <select id="titulaire" name="titulaire" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                             <option value="">Sélectionnez un titulaire</option>
-                            <option value="Jean Doe">exaudie</option>
-                            <option value="Marie Dupont">gust</option>
+                            <?php foreach($afficheProf as $prof){?>
+                            <option value="<?php echo $prof->ID_prof ?>"><?php echo $prof->PostNom_prof." ".$prof->Nom_prof ?></option>
+                           <?php }  ?>
                         </select>
                     </div>
 

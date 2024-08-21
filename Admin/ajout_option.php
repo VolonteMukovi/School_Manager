@@ -31,11 +31,14 @@
                             <label for="option" class="block text-gray-700 font-bold mb-2">
                                 <i class="fas fa-book mr-2"></i>Section
                             </label>
-                            <select id="option" name="section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                <option value="">Sélectionnez une option</option>
-                                <option value="Scientifique">Techinque</option>
-                                <option value="Littéraire">Littéraire</option>
-                            </select>
+                            <?php  $affichesection = afficheSection($db); ?>
+                        <select id="section" name="section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            <option value="">Sélectionnez une section</option>
+                            <?php foreach($affichesection as $section){?>
+                            <option value="<?php echo $section->ID_section ?>"><?php echo $section->designation_section ?></option>
+                           <?php }  ?>
+                            
+                        </select>
                         </div>
                     </div>
                     <div class="text-center">
