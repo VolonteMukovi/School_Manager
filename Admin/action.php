@@ -9,6 +9,15 @@ if(isset($_POST["btnAjoutAnne"]))
 
 }
 
+if(isset($_POST["btnAeditAnne"]))
+{
+    $anne = htmlspecialchars($_POST["designation"]);
+    $status = htmlspecialchars($_POST["status"]);
+    $id = htmlspecialchars($_POST["idAnne"]);
+    editAnne($db,$anne,$status,$id);
+
+}
+
 
 
 

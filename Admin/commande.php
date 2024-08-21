@@ -50,4 +50,47 @@ function saveAnne($db,$anne)
         $e->getMessage();
     }
 }
+
+function editAnne($db,$anne,$status,$id)
+{
+    try {
+        $req = $db->prepare("UPDATE `tb_annee_scholaire` SET `annee`=?,`status`=? WHERE `ID_anne_scholaire`=?");
+        $req->execute(array($anne,$status,$id));
+        header("location: dasboard.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function AfficheAnnee($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_annee_scholaire` ORDER BY `annee` DESC");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function clotureAnneWhere($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_annee_scholaire`SELECT * FROM `tb_annee_scholaire` WHERE `status`='Année en cours' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function clotureAnne($db,$id)
+{
+    try {
+        $req = $db->prepare("UPDATE `tb_annee_scholaire` SET `status`=? WHERE `ID_anne_scholaire`=?");
+        $req->execute(array("Clôturer",$id));
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
  
