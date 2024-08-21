@@ -262,3 +262,5 @@ function afficheProf($db)
         $e->getMessage();
     }
 }
+
+
