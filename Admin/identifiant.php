@@ -12,6 +12,7 @@
 <body class="bg-gray-100">
     <div class="flex">
         <?php include "sidebar.php";
+        include("../DataBase/connexion_DB.php");
         include("commande.php") ?>
         <div class="flex-grow">
             <?php include "header.php";
@@ -19,10 +20,10 @@
 
                 $pseudo = htmlspecialchars($_POST["identifiant"]);
                 $pwd = htmlspecialchars($_POST["motdepasse"]);
-                editAdmin($pseudo,$pwd);
-                $affiche = AfficheAdmin();
+                editAdmin($db,$pseudo,$pwd);
+                $affiche = AfficheAdmin($db);
             }
-            $affiche = AfficheAdmin();
+            $affiche = AfficheAdmin($db);
             ?>
             <main class="p-6">
                 <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Modifier les Identifiants</h2>

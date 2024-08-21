@@ -1,10 +1,7 @@
 <?php
-include("../DataBase/connexion_DB.php");
-$db = $db;
 // ================================= LOGIN ADMIN ======================================
-function loginAdmin($pseudo, $pwd)
+function loginAdmin($db, $pseudo, $pwd)
 {
-    global $db;
     try {
         $req = $db->query("SELECT * FROM `tb_adnim` WHERE `Pseudo`='".$pseudo."' AND `mot_de_passe`='".$pwd."'");
         if ($req->rowCount() > 0) {
@@ -19,9 +16,8 @@ function loginAdmin($pseudo, $pwd)
     }
 }
 
-function AfficheAdmin()
+function AfficheAdmin($db)
 {
-    global $db;
     try {
         $req = $db->query("SELECT * FROM `tb_adnim`");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
@@ -32,9 +28,8 @@ function AfficheAdmin()
 }
 
 
-function editAdmin($pseudo,$pwd)
+function editAdmin($db,$pseudo,$pwd)
 {
-    global $db;
     try {
         $req = $db->prepare("UPDATE `tb_adnim` SET `Pseudo` = ?,`mot_de_passe`=? ");
         $req->execute(array($pseudo,$pwd));
@@ -45,17 +40,12 @@ function editAdmin($pseudo,$pwd)
 
 // ================================= ANNEE SCHOLAIRE ======================================
 
-function saveAnne($db, $pseudo, $pwd)
+function saveAnne($db,$anne)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_adnim` WHERE `Pseudo`='".$pseudo."' AND `mot_de_passe`='".$pwd."'");
-        if ($req->rowCount() > 0) {
-            $data = $req->fetchAll(PDO::FETCH_OBJ);
-            setcookie("admin", serialize($data), time() + (365 * 24 * 60 * 60));
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        $req = $db->prepare("INSERT INTO `tb_annee_scholaire`(`annee`) VALUES (?)");
+        $req->execute(array($anne));
+        header("location: dasboard.php");
     } catch (Exception $e) {
         $e->getMessage();
     }

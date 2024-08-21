@@ -26,13 +26,13 @@
                     <div class="w-full max-w-lg">
                         <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Ajouter une Année Scolaire</h2>
 
-                        <form class="bg-white p-6 rounded shadow-md w-full">
+                        <form method="post" action="action.php" class="bg-white p-6 rounded shadow-md w-full">
                             <div class="mb-4">
                                 <label for="designation" class="block text-gray-700 font-semibold mb-2">Désignation de l'Année Scolaire</label>
                                 <input type="text" id="designation" name="designation" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="ex: 2021-2022" required>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
+                                <button name="btnAjoutAnne" type="submit" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
                                     Créer
                                 </button>
                             </div>
