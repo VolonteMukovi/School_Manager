@@ -22,11 +22,21 @@ if (isset($_POST["btnSaveEleve"])) {
     $code = htmlspecialchars(ucwords($_POST["code"]));
     $nom = htmlspecialchars(ucwords($_POST["nom"]));
     $postnom = htmlspecialchars(ucwords($_POST["postnom"]));
-    $section = htmlspecialchars(ucwords($_POST["section"]));
-    $classe = htmlspecialchars(ucwords($_POST["classe"]));
+    // $section = htmlspecialchars(ucwords($_POST["section"]));
+    $classe = htmlspecialchars(ucwords($_POST["classes"]));
     $option = htmlspecialchars(ucwords($_POST["option"]));
     $photo = $_FILES["photo"];
-    saveEleve($db, $matricule, $nom, $postnom, $code, $section, $option, $classe, $photo);
+    $dateNaissance = $_POST["dateNaissance"];
+    $genre = $_POST["genre"];
+    $lieuNaissance = htmlspecialchars(ucwords($_POST["lieuNaissance"]));
+    $adresse = htmlspecialchars(ucwords($_POST["adresse"]));
+    $ecoleOrigine = htmlspecialchars(ucwords($_POST["ecoleOrigine"]));
+    $numeroPermanent = htmlspecialchars(ucwords($_POST["numeroPermanent"]));
+    $nationaliter = htmlspecialchars(ucwords($_POST["nationaliter"]));
+    $nomTuteur = htmlspecialchars(ucwords($_POST["nomTuteur"]));
+    $numTel = htmlspecialchars(ucwords($_POST["numTel"]));
+    $anneInscription = htmlspecialchars(ucwords($_POST["anneInscription"]));
+    saveEleve($db,$matricule,$nom,$postnom,$code,$genre,$lieuNaissance,$dateNaissance,$adresse,$ecoleOrigine,$numeroPermanent,$nomTuteur,$numTel,$nationaliter,$photo,$classe,$anneInscription);
 }
 
 

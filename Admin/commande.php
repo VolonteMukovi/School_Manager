@@ -97,7 +97,7 @@ function clotureAnne($db, $id)
 
 // ==================================================================== INSCRIPTION ELEVE ===============================================================
 
-function saveEleve($db, $matricule, $nom, $postnom, $code, $section, $option, $classe, $photo)
+function saveEleve($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,$photo,$id_classes_inscript,$anneeScholair_inscript)
 {
     if (isset($photo) and $photo['error'] == 0) {
         if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
@@ -107,8 +107,11 @@ function saveEleve($db, $matricule, $nom, $postnom, $code, $section, $option, $c
             if (in_array($extension_upload, $extensions_autorisees)) {
                 if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
                     try {
-                        $req =  $db->prepare("INSERT INTO `tb_eleve`(`Matricule_eleve`, `Nom_eleve`, `postnom`, `code`, `Section`, `options`, `classe`, `Photo_eleve`) VALUES (?,?,?,?,?,?,?,?)");
-                        $req->execute(array($matricule, $nom, $postnom, $code, $section, $option, $classe, basename($photo['name'])));
+                        $req =  $db->prepare("INSERT INTO `tb_eleve`(`Matricule_eleve`, `Nom_eleve`, `postnom`, `code`, `genre_eleve`, `lieuNaissance_eleve`, `dateNaissance_eleve`, `adress_eleve`, `ecoleOrigine_eleve`, `numePerma_eleve`, `nomTuteur_eleve`, `numeTelTuteur_eleve`, `Nationalite_eleve`, `Photo_eleve`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        $req->execute(array($matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,basename($photo['name'])));
+                        $id_eleve_inscript = $db->lastInsertId();
+                        $req =  $db->prepare("INSERT INTO `tb_inscription`(`id_eleve_inscript`, `id_classes_inscript`, `anneeScholair_inscript`) VALUES (?,?,?)");
+                        $req->execute(array($id_eleve_inscript,$id_classes_inscript,$anneeScholair_inscript));
                         unset($_POST);
                         ?>
                             <script>alert("Enrégistrement Réussit Avec Succèss")</script>

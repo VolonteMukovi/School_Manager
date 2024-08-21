@@ -120,10 +120,13 @@
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="option">
                             <i class="fas fa-graduation-cap mr-2"></i> Classe
                         </label>
+                        <?php $listeClass = afficheClasses($db);   ?>
                         <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="classes" id="option">
-                            <option value="classe1">Classe 1</option>
-                            <option value="classe2">Classe 2</option>
-                            <option value="classe3">Classe 3</option>
+                            <option value="classe1">Sélectionner Une Classe</option>
+                           <?php  foreach($listeClass as $classe) {  ?>
+                                <option value="<?php echo $classe->ID_classes  ?>"><?php echo $classe->designation_classes ."   ".$classe->designation_option	 ?></option>
+                         <?php  } ?>
+                            
                         </select>
                     </div>
                     <div class="w-1/2 px-3 mb-6">
@@ -149,13 +152,26 @@
                     <label class="block text-gray-700 font-bold mb-2 flex items-center" for="postnom">
                             <i class="fas fa-user mr-2"></i> Nom du Tuteur
                         </label>
-                        <input required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="nomTuteur" id="postnom" type="text" placeholder="Nom du Tuteur">
+                        <input name="nomTuteur" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="postnom" type="text" placeholder="Nom du Tuteur">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                     <label class="block text-gray-700 font-bold mb-2 flex items-center" for="postnom">
                             <i class="fas fa-user mr-2"></i> Numéro Téléphone
                         </label>
-                        <input required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="nationaliter" id="postnom" type="text" placeholder="Nationaliter">
+                        <input name="numTel" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="postnom" type="text" placeholder="Numero Telephone">
+                    </div>
+                    <div class="w-1/2 px-3 mb-6">
+                        <label class="block text-gray-700 font-bold mb-2 flex items-center" for="option">
+                            <i class="fas fa-graduation-cap mr-2"></i> Annee
+                        </label>
+                        <?php $annees = AfficheAnnee($db);   ?>
+                        <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="anneInscription" id="option">
+                            <option value="classe1">Sélectionner L'Année</option>
+                           <?php  foreach($annees as $annee) {  ?>
+                                <option value="<?php echo $annee->ID_anne_scholaire  ?>"><?php echo $annee->annee."  ".$annee->status  ?></option>
+                         <?php  } ?>
+                            
+                        </select>
                     </div>
                     <div class="w-full px-3 mb-6 flex justify-end">
                         <button name="btnSaveEleve" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
