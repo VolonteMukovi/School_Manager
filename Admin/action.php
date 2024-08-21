@@ -63,3 +63,18 @@ if (isset($_POST["btnSaveSection"])) {
     saveSection($db,$designation);
 }
 
+
+
+// ===================================================================================== PROFFESEURS ================================================================================================
+
+if (isset($_POST["btnSaveProf"])) {
+    $matricule = htmlspecialchars(ucwords($_POST["matricule"]));
+    $nom = htmlspecialchars(ucwords($_POST["nom"]));
+    $postNom = htmlspecialchars(ucwords($_POST["postNom"]));
+    $categorie = htmlspecialchars(ucwords($_POST["categorie"]));
+    $salaire = htmlspecialchars(ucwords($_POST["salaire"]));
+    $numTele = htmlspecialchars(ucwords($_POST["numTele"]));
+    $adress = htmlspecialchars(ucwords($_POST["adress"]));
+    $photo = $_FILES["photo"];
+    saveProf($db, $matricule, $nom, $postNom,$categorie,$salaire,$numTele,$adress,$photo);
+}

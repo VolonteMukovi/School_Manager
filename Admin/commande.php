@@ -181,3 +181,40 @@ function saveSection($db,$designation_section)
         $e->getMessage();
     }
 }
+
+
+// ==================================================================== PROFFESEURS ===============================================================
+
+function saveProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,$photo)
+{
+    if (isset($photo) and $photo['error'] == 0) {
+        if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
+            $infosfichier = pathinfo($photo['name']);
+            $extension_upload = $infosfichier['extension'];
+            $extensions_autorisees = array('png', 'jpg', 'jpeg', "avif");
+            if (in_array($extension_upload, $extensions_autorisees)) {
+                if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
+                    try {
+                        $req =  $db->prepare("INSERT INTO `tb_professeur`(`Matricule_prof`, `Nom_prof`, `PostNom_prof`, `categorie_prof`, `salaire_prof`, `Numtel_prof`, `Adress_prof`, `photo_prof`) VALUES (?,?,?,?,?,?,?,?)");
+                        $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof, basename($photo['name'])));
+                        unset($_POST);
+                        ?>
+                            <script>alert("Enrégistrement Réussit Avec Succèss")</script>
+                        <?php
+                        header("location: ajouts_prof.php");
+                    } catch (PDOException $e) {
+                        echo $e->getMessage();
+                    }
+                } else {
+                    echo "Votre image n'as pas pui etre envoiye au serveur veillez ressayer";
+                }
+            } else {
+                echo "L'extension est incorrect";
+            }
+        } else {
+            echo "Veille verifier la taille de votre image peut etre il esg grand par rapport a la taille autorise";
+        }
+    } else {
+        echo "Votre image n'as pas pu etre trouver ou elle eroner rassayer svp";
+    }
+}

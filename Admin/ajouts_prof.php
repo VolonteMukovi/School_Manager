@@ -42,57 +42,57 @@
             <h1 class="text-2xl font-bold text-center text-gray-700 mb-6">Ajouter un Professeur</h1>
 
             <div class="flex">
-                <form class="w-2/3 bg-white p-6 rounded shadow-md flex flex-wrap ml-6">
+                <form method="post" action="action.php" class="w-2/3 bg-white p-6 rounded shadow-md flex flex-wrap ml-6" enctype="multipart/form-data">
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="matricule">
                             <i class="fas fa-id-badge mr-2"></i> Matricule
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="matricule" type="text" placeholder="Matricule">
+                        <input name="matricule" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="matricule" type="text" placeholder="Matricule">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="nom">
                             <i class="fas fa-user mr-2"></i> Nom
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nom" type="text" placeholder="Nom">
+                        <input name="nom" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nom" type="text" placeholder="Nom">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="postnom">
                             <i class="fas fa-user mr-2"></i> Postnom
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="postnom" type="text" placeholder="Postnom">
+                        <input name="postNom" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="postnom" type="text" placeholder="Postnom">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="categorie">
                             <i class="fas fa-briefcase mr-2"></i> Catégorie
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="categorie" type="text" placeholder="Catégorie">
+                        <input name="categorie" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="categorie" type="text" placeholder="Catégorie">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="salaire">
                             <i class="fas fa-dollar-sign mr-2"></i> Salaire
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="salaire" type="number" placeholder="Salaire">
+                        <input name="salaire" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="salaire" type="number" placeholder="Salaire">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="telephone">
                             <i class="fas fa-phone mr-2"></i> Téléphone
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telephone" type="text" placeholder="Téléphone">
+                        <input name="numTele" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telephone" type="text" placeholder="Téléphone">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="adresse">
                             <i class="fas fa-map-marker-alt mr-2"></i> Adresse
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="adresse" type="text" placeholder="Adresse">
+                        <input name="adress" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="adresse" type="text" placeholder="Adresse">
                     </div>
                     <div class="w-1/2 px-3 mb-6">
                         <label class="block text-gray-700 font-bold mb-2 flex items-center" for="photo">
                             <i class="fas fa-camera mr-2"></i> Photo
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="photo" type="file" accept="image/*" onchange="previewPhoto(event)">
+                        <input name="photo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="photo" type="file" accept="image/*" onchange="previewPhoto(event)">
                     </div>
                     <div class="w-full px-3 mb-6 flex justify-end">
-                        <button class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
+                        <button name="btnSaveProf" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
                             Enregistrer
                         </button>
                     </div>
