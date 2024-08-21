@@ -38,7 +38,7 @@ function editAdmin($db, $pseudo, $pwd)
     }
 }
 
-// ================================= ANNEE SCHOLAIRE ======================================
+// ======================================================================= ANNEE SCHOLAIRE =======================================================================
 
 function saveAnne($db, $anne)
 {
@@ -95,7 +95,7 @@ function clotureAnne($db, $id)
     }
 }
 
-// ================================= INSCRIPTION ELEVE ======================================
+// ==================================================================== INSCRIPTION ELEVE ===============================================================
 
 function saveEleve($db, $matricule, $nom, $postnom, $code, $section, $option, $classe, $photo)
 {
@@ -137,6 +137,33 @@ function AfficheEleve($db)
         $req = $db->query("SELECT * FROM `tb_adnim`");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+// ==================================================================== SALLE DE CLASSES ===============================================================
+function saveClasses($db,$designation_class,$id_section,$id_option,$titulaire_class)
+{
+    try {
+        $req = $db->prepare("INSERT INTO `tb_classes`(`designation_classes`, `id_section`, `id_option`, `titulaire_classes`) VALUES (?,?,?,?)");
+        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class));
+        header("location: ajouts_classes.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+
+// ==================================================================== OPTIONS ===============================================================
+function saveOption($db,$designation_option,$id_section)
+{
+    try {
+        $req = $db->prepare("INSERT INTO `tb_option`(`designation_option`, `id_section`) VALUES (?,?)");
+        $req->execute(array($designation_option,$id_section));
+        header("location: ajout_option.php");
     } catch (Exception $e) {
         $e->getMessage();
     }

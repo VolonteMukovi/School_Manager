@@ -19,7 +19,7 @@
             <h1 class="text-2xl font-bold text-center text-gray-700 mb-6">Ajouter une classe</h1>
 
             <div class="bg-white p-6 rounded shadow-md max-w-lg mx-auto">
-                <form action="ajouter_classe.php" method="post">
+                <form action="action.php" method="post">
                     <div class="mb-4">
                         <label for="designation" class="block text-gray-700 font-bold mb-2">
                             <i class="fas fa-tag mr-2"></i>Désignation
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="flex items-center justify-center">
-                        <button type="submit" class="bg-gray-600 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <button name="btnAjoutClasses" type="submit" class="bg-gray-600 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Ajouter
                         </button>
                     </div>
