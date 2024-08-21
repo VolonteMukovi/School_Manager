@@ -1,5 +1,4 @@
-<?php include("..//DataBase/connexion_DB.php");
-include("commande.php") ?>
+<?php include("commande.php") ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -44,7 +43,7 @@ include("commande.php") ?>
                     $pseudo = htmlspecialchars($_POST["identifiant"]);
                     $pwd = htmlspecialchars($_POST["password"]);
                     loginAdmin($db, $pseudo, $pwd);
-                    if (loginAdmin($db, $pseudo, $pwd) == TRUE) {
+                    if (loginAdmin($pseudo, $pwd) == TRUE) {
                         header("location: dasboard.php");
                     } else { ?>
                         <div id="errorMessage" class="hidde bg-red-500 text-white text-center py-2 rounded-md">
