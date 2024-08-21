@@ -75,7 +75,7 @@
                             <span disabled class="bg-yellow-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-yellow-600">
                                 <i class="fas fa-edit mr-2"></i> Éditer
                             </span> <?php
-                                        $affWhere = clotureAnneWhere($db);
+                                        $affWhere = anneeEncours($db);
                                         foreach ($affWhere as $where) {
                                             $where = $where;
                                         } ?>
@@ -92,7 +92,7 @@
                             <button class="bg-yellow-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-yellow-600">
                                 <i class="fas fa-edit mr-2"></i> <a href="ajouts_annee.php?action=editer">Éditer</a>
                             </button> <?php
-                                        $affWhere = clotureAnneWhere($db);
+                                        $affWhere = anneeEncours($db);
                                         foreach ($affWhere as $where) {
                                             $where = $where;
                                         } ?>

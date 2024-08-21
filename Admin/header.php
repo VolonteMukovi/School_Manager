@@ -18,7 +18,7 @@
                     <span class="text-gray-700 font-semibold">Administrateur</span>
                 </div>
                 <?php
-                 $annees = clotureAnneWhere($db);
+                 $annees = anneeEncours($db);
                 foreach ($annees as $annee) {$annee = $annee->annee ;}?>
                 <h2 class="text-xl font-semibold text-gray-700">Année Scolaire : <span class="font-bold text-[#16C8FF]"><?php echo @$annee; ?></span></h2>
                

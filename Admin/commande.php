@@ -73,7 +73,7 @@ function AfficheAnnee($db)
     }
 }
 
-function clotureAnneWhere($db)
+function anneeEncours($db)
 {       $status = "Annee en cours";
     try {
         $req = $db->query("SELECT * FROM `tb_annee_scholaire` WHERE `status` = '" . $status. "' ");
