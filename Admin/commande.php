@@ -74,9 +74,9 @@ function AfficheAnnee($db)
 }
 
 function clotureAnneWhere($db)
-{
+{       $status = "Annee en cours";
     try {
-        $req = $db->query("SELECT * FROM `tb_annee_scholaire`SELECT * FROM `tb_annee_scholaire` WHERE `status`='Année en cours' ");
+        $req = $db->query("SELECT * FROM `tb_annee_scholaire` WHERE `status` = '" . $status. "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {

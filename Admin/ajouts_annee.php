@@ -46,9 +46,10 @@
                     <div class="flex justify-center">
                         <div class="w-full max-w-lg">
                             <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Ajouter une Année Scolaire</h2>
-                            <?php $affAnnee = clotureAnneWhere($db) ?>
+                            <?php $affWhere = clotureAnneWhere($db);
+                            ?>
                             <form method="post" action="action.php" class="bg-white p-6 rounded shadow-md w-full">
-                                <?php  foreach($affAnnee as $annee) { ?>
+                                <?php  foreach($affWhere as $annee) { ?>
                                 <div class="mb-2">
                                     <label for="designation" class="block text-gray-700 font-semibold mb-2">Désignation de l'Année Scolaire</label>
                                     <input value="<?php echo $annee->annee; ?>" type="text" id="designation" name="designation" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="ex: 2021-2022" required>

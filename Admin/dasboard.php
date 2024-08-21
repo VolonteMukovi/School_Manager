@@ -23,9 +23,11 @@
             <?php if (isset($_GET["action"]) and $_GET["action"] == "cloturer") {
                 $id = $_GET["status"];
                 clotureAnne($db, $id);
-                ?>
-                <script>window.location.href = "dasboard.php";</script>
-                <?php
+            ?>
+                <script>
+                    window.location.href = "dasboard.php";
+                </script>
+            <?php
             } else {  ?>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6 cursor-pointer">
                     <div class="bg-gray-400 text-white p-4 shadow-md ml-2">
@@ -66,7 +68,24 @@
 
                 <?php $annees = AfficheAnnee($db);
                 foreach ($annees as $annee) {
-                ?>
+                    if ($annee->status == "Clôturer") { ?>
+                        <div class="flex items-center justify-between bg-white p-4 rounded shadow-md mx-2 mb-2">
+                            <span class="text-lg font-semibold text-gray-700"><?php echo $annee->status ?> : <span class="font-bold text-[#16C8FF]"><?php echo $annee->annee ?></span></span>
+                            <div>
+                            <span disabled class="bg-yellow-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-yellow-600">
+                                <i class="fas fa-edit mr-2"></i> Éditer
+                            </span> <?php
+                                        $affWhere = clotureAnneWhere($db);
+                                        foreach ($affWhere as $where) {
+                                            $where = $where;
+                                        } ?>
+                            <span disabled class=" ml-4 bg-red-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-red-600">
+                                <i class="fas fa-times-circle mr-2"></i> Clôturer
+                            </span>
+                            </div>
+                        </div>
+                    <?php } else{
+                    ?>
                     <div class="flex items-center justify-between bg-white p-4 rounded shadow-md mx-2 mb-2">
                         <span class="text-lg font-semibold text-gray-700"><?php echo $annee->status ?> : <span class="font-bold text-[#16C8FF]"><?php echo $annee->annee ?></span></span>
                         <div>
@@ -74,7 +93,7 @@
                                 <i class="fas fa-edit mr-2"></i> <a href="ajouts_annee.php?action=editer">Éditer</a>
                             </button> <?php
                                         $affWhere = clotureAnneWhere($db);
-                                        foreach($affWhere as $where){
+                                        foreach ($affWhere as $where) {
                                             $where = $where;
                                         } ?>
                             <a href="?action=cloturer&status=<?php echo $where->ID_anne_scholaire ?>" class=" ml-4 bg-red-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-red-600">
@@ -82,7 +101,9 @@
                             </a>
                         </div>
                     </div>
-                <?php } ?>
+                <?php }
+                }
+                ?>
         </div>
     <?php } ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
