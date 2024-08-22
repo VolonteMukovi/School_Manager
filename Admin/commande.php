@@ -137,7 +137,7 @@ function saveEleve($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
 function afficheEleve($db)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_adnim`");
+        $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
