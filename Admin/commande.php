@@ -145,6 +145,70 @@ function afficheEleve($db)
     }
 }
 
+function afficheEleveEdit($db,$id_eleve)
+{
+    try {
+        $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_eleve.ID_eleve = '" . $id_eleve. "' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function eleveEdit($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,$photo,$id_classes_inscript,$anneeScholair_inscript,$ide_eleve,$id_inscription)
+{
+    if (isset($photo) and $photo['error'] == 0) {
+        if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
+            $infosfichier = pathinfo($photo['name']);
+            $extension_upload = $infosfichier['extension'];
+            $extensions_autorisees = array('png', 'jpg', 'jpeg', "avif");
+            if (in_array($extension_upload, $extensions_autorisees)) {
+                if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
+                    try {
+                        $req =  $db->prepare("UPDATE `tb_eleve` SET `Matricule_eleve`=?,`Nom_eleve`=?,`postnom`=?,`code`=?,`genre_eleve`=?,`lieuNaissance_eleve`=?,`dateNaissance_eleve`=?,`adress_eleve`=?,`ecoleOrigine_eleve`=?,`numePerma_eleve`=?,`nomTuteur_eleve`=?,`numeTelTuteur_eleve`=?,`Nationalite_eleve`=?, `Photo_eleve`=? WHERE `ID_eleve`=?");
+                         $req->execute(array($matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,basename($photo['name']),$ide_eleve));
+                        $req =  $db->prepare("UPDATE `tb_inscription` SET `id_classes_inscript`=?,`anneeScholair_inscript`=? WHERE `ID_inscription` =?");
+                        $req->execute(array($id_classes_inscript,$anneeScholair_inscript,$id_inscription));
+                        unset($_POST);
+                        header("location: ajouts_eleves.php");
+                    } catch (PDOException $e) {
+                        echo $e->getMessage();
+                    }
+                } else {
+                    echo "Votre image n'as pas pui etre envoiye au serveur veillez ressayer";
+                }
+            } else {
+                echo "L'extension est incorrect";
+            }
+        } else {
+            echo "Veille verifier la taille de votre image peut etre il esg grand par rapport a la taille autorise";
+        }
+    } else {
+       
+        try {
+            $req =  $db->prepare("UPDATE `tb_eleve` SET `Matricule_eleve`=?,`Nom_eleve`=?,`postnom`=?,`code`=?,`genre_eleve`=?,`lieuNaissance_eleve`=?,`dateNaissance_eleve`=?,`adress_eleve`=?,`ecoleOrigine_eleve`=?,`numePerma_eleve`=?,`nomTuteur_eleve`=?,`numeTelTuteur_eleve`=?,`Nationalite_eleve`=? WHERE `ID_eleve`=?");
+            $req->execute(array($matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,$ide_eleve));
+            $req =  $db->prepare("UPDATE `tb_inscription` SET `id_classes_inscript`=?,`anneeScholair_inscript`=? WHERE `ID_inscription` =?");
+            $req->execute(array($id_classes_inscript,$anneeScholair_inscript,$id_inscription));
+            unset($_POST);
+            header("location: ajouts_eleves.php");
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+    }
+}
+
+function deleteEleve($db,$id_eleve)
+{
+    try {
+        $req = $db->query("DELETE FROM `tb_eleve` WHERE `ID_eleve`= '".$id_eleve."' ");
+        header("location: inscrits.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
 
 // ==================================================================== SALLE DE CLASSES ===============================================================
 function saveClasses($db,$designation_class,$id_section,$id_option,$titulaire_class)
@@ -254,6 +318,40 @@ function saveProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
     }
 }
 
+
+function editProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,$photo,$id_prof)
+{
+    if (isset($photo) and $photo['error'] == 0) {
+        if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
+            $infosfichier = pathinfo($photo['name']);
+            $extension_upload = $infosfichier['extension'];
+            $extensions_autorisees = array('png', 'jpg', 'jpeg', "avif");
+            if (in_array($extension_upload, $extensions_autorisees)) {
+                if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
+                    try {
+                        $req =  $db->prepare("UPDATE `tb_professeur` SET `ID_prof`=?,`Matricule_prof`=?,`Nom_prof`=?,`PostNom_prof`=?,`categorie_prof`=?,`salaire_prof`=?,`Numtel_prof`=?,`Adress_prof`=?,`photo_prof`=? WHERE `ID_prof`=?");
+                        $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof, basename($photo['name'])),$id_prof);
+                        unset($_POST);
+                        ?>
+                            <script>alert("Enrégistrement Réussit Avec Succèss")</script>
+                        <?php
+                        header("location: ajouts_prof.php");
+                    } catch (PDOException $e) {
+                        echo $e->getMessage();
+                    }
+                } else {
+                    echo "Votre image n'as pas pui etre envoiye au serveur veillez ressayer";
+                }
+            } else {
+                echo "L'extension est incorrect";
+            }
+        } else {
+            echo "Veille verifier la taille de votre image peut etre il esg grand par rapport a la taille autorise";
+        }
+    } else {
+        echo "Votre image n'as pas pu etre trouver ou elle eroner rassayer svp";
+    }
+}
 
 function afficheProf($db)
 {

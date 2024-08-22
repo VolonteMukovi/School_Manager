@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("..//DataBase/connexion_DB.php");
 include("commande.php");
 // ================================= AJOUT ANNEE ======================================
@@ -39,7 +40,33 @@ if (isset($_POST["btnSaveEleve"])) {
     saveEleve($db,$matricule,$nom,$postnom,$code,$genre,$lieuNaissance,$dateNaissance,$adresse,$ecoleOrigine,$numeroPermanent,$nomTuteur,$numTel,$nationaliter,$photo,$classe,$anneInscription);
 }
 
+if (isset($_POST["btnEditEleve"])) {
+    $id_eleve = $_SESSION["idEleve"];
+    $id_inscription=$_SESSION["idInscriptio"];
+    $matricule = htmlspecialchars(ucwords($_POST["matricule"]));
+    $code = htmlspecialchars(ucwords($_POST["code"]));
+    $nom = htmlspecialchars(ucwords($_POST["nom"]));
+    $postnom = htmlspecialchars(ucwords($_POST["postnom"]));
+    // $section = htmlspecialchars(ucwords($_POST["section"]));
+    $classe = htmlspecialchars(ucwords($_POST["classes"]));
+    // $option = htmlspecialchars(ucwords($_POST["option"]));
+    $photo = $_FILES["photo"];
+    $dateNaissance = $_POST["dateNaissance"];
+    $genre = $_POST["genre"];
+    $lieuNaissance = htmlspecialchars(ucwords($_POST["lieuNaissance"]));
+    $adresse = htmlspecialchars(ucwords($_POST["adresse"]));
+    $ecoleOrigine = htmlspecialchars(ucwords($_POST["ecoleOrigine"]));
+    $numeroPermanent = htmlspecialchars(ucwords($_POST["numeroPermanent"]));
+    $nationaliter = htmlspecialchars(ucwords($_POST["nationaliter"]));
+    $nomTuteur = htmlspecialchars(ucwords($_POST["nomTuteur"]));
+    $numTel = htmlspecialchars(ucwords($_POST["numTel"]));
+    $anneInscription = htmlspecialchars(ucwords($_POST["anneInscription"]));
+    eleveEdit($db,$matricule,$nom,$postnom,$code,$genre,$lieuNaissance,$dateNaissance,$adresse,$ecoleOrigine,$numeroPermanent,$nomTuteur,$numTel,$nationaliter,$photo,$classe,$anneInscription,$id_eleve,$id_inscription);
+}
 
+if (isset($_GET["action"]) and $_GET["action"] == "supprimer") {
+    $eleveSup = deleteEleve($db,$_GET["eleve"]);
+}
 // ==================================================================== SALLE DE CLASSES ===============================================================
 
 

@@ -12,8 +12,7 @@
 <body class="bg-gray-100">
     <div class="flex">
         <?php include "sidebar.php";
-        include("../DataBase/connexion_DB.php");
-        include("commande.php") ?>
+        include("../DataBase/connexion_DB.php");?>
         <div class="flex-grow">
             <?php include "header.php";
             if(isset($_POST["btnEditAdmin"])){

@@ -1,6 +1,7 @@
+<?php 
+session_start();?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,16 +40,7 @@
         <div class="flex-grow ">
             <?php include "header.php"; ?>
             <?php
-
-
-
-
-
-
-
-
-
-            $affEleve = afficheEleve($db);
+            @$affEleve = afficheEleveEdit($db,$_GET["eleve"]);
             foreach($affEleve as $eleve)
             {   
                 $photo = $eleve->Photo_eleve;
@@ -69,13 +61,16 @@
                 $nomParent = $eleve->nomTuteur_eleve;
                 $numTel = $eleve->numeTelTuteur_eleve;
                 $anne = $eleve->annee;
-                $id_anne = $eleve->	ID_anne_scholaire;
+                $id_anne = $eleve->ID_anne_scholaire;
+                $id_inscription = $eleve->ID_inscription;
 
             }
             if (isset($_GET["eleve"])) {
-                if (isset($_GET["action"]) and $_GET["action"] == "editer") { ?>
+                if (isset($_GET["action"]) and $_GET["action"] == "editer")
+                    $_SESSION["idEleve"]=$_GET["eleve"];
+                    $_SESSION["idInscriptio"]=$id_inscription;
+                { ?>
                     <h1 class="text-2xl font-bold text-center text-gray-700 mb-3">Modifier un élève</h1>
-
                     <div class="flex">
                         <div style="float: right; margin-right: 25px;" id="photo-preview" class="ml-6">
                             <i class="fas fa-user icon-user"></i>
@@ -134,7 +129,7 @@
                                 <label class="block text-gray-700 font-bold mb-2 flex items-center" for="photo">
                                     <i class="fas fa-camera mr-2"></i> Photo
                                 </label>
-                                <input value="<?php echo $photo;  ?>" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="photo" id="photo" type="file" accept="image/*" onchange="previewPhoto(event)">
+                                <input  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="photo" id="photo" type="file" accept="image/*" onchange="previewPhoto(event)">
                             </div>
 
                             <div class="w-1/2 px-3 mb-6">
@@ -201,15 +196,13 @@
                                 </select>
                             </div>
                             <div class="w-full px-3 mb-6 flex justify-end">
-                                <button name="btnSaveEleve" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
-                                    Enregistrer
+                                <button name="btnEditEleve" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
+                                    Modifier
                                 </button>
                             </div>
                         </form>
                     </div>
                 <?php }
-                if (isset($_GET["action"]) and $_GET["action"] == "supprimer") {
-                }
             } else { ?>
                 <h1 class="text-2xl font-bold text-center text-gray-700 mb-3">Ajouter un élève</h1>
 
