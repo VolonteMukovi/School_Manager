@@ -27,7 +27,7 @@
                     <table class="min-w-full bg-white">
                         <thead class="bg-gray-800 ">
                             <tr>
-                                <th class="w-1/6 px-4 py-2 text-left text-gray-300">Code</th>
+                                <!-- <th class="w-1/6 px-4 py-2 text-left text-gray-300">Code</th> -->
                                 <th class="w-1/6 px-4 py-2 text-left text-gray-300">Désignation</th>
                                 <th class="w-1/6 px-4 py-2 text-left text-gray-300">Enseignant</th>
                                 <th class="w-1/6 px-4 py-2 text-left text-gray-300">Cote totale</th>
@@ -36,12 +36,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="px-4 py-2 border-t">001</td>
-                                <td class="px-4 py-2 border-t">Mathématiques</td>
-                                <td class="px-4 py-2 border-t">Mr. Dupont</td>
-                                <td class="px-4 py-2 border-t">100</td>
-                                <td class="px-4 py-2 border-t">3ème A</td>
+                           
+                                <?php    $affCours = afficheCours($db);     
+                                 foreach($affCours as $cour ) {  ?>
+                                 <tr>
+                                <!-- <td class="px-4 py-2 border-t"></td> -->
+                               
+                                <td class="px-4 py-2 border-t"><?php echo $cour->designation_option  ?></td>
+                                <td class="px-4 py-2 border-t"><?php echo $cour->Nom_prof."  ".$cour->PostNom_prof  ?></td>
+                                <td class="px-4 py-2 border-t"><?php echo $cour->cotetotal_cour  ?></td>
+                                <td class="px-4 py-2 border-t"><?php echo $cour->designation_classes  ?></td>
                                 <td class="px-4 py-2 border-t">
                                     <div class="flex space-x-2">
                                         <a href="#" class="text-blue-500 hover:text-blue-700">
@@ -56,6 +60,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <?php }  ?>
                         </tbody>
                     </table>
                 </div>

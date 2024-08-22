@@ -203,8 +203,8 @@ function eleveEdit($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
 function deleteEleve($db,$id_eleve)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_eleve` WHERE `ID_eleve`= '".$id_eleve."' ");
-        header("location: inscrits.php");
+        $req = $db->query("DELETE FROM `tb_professeur` WHERE `ID_prof` = '".$id_eleve."' ");
+        header("location: listes_prof.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -379,4 +379,48 @@ function afficheProfEdit($db,$id_prof)
     }
 }
 
+function afficheProfCours($db,$id_prof)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_professeur` WHERE `ID_prof`= '".$id_prof."' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
 
+function deleteProf($db,$id_prof)
+{
+    try {
+        $req = $db->query("DELETE FROM `tb_professeur` WHERE = '".$id_prof."' ");
+        header("location: listes_prof.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+// ============================================================================= COURS ==================================================================
+
+function saveCours($db,$cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$designation_cours,$code_cours)
+{
+    try {
+        $req = $db->prepare("INSERT INTO `tb_cours`(`cotetotal_cour`, `nbHeur_cour`, `id_enseignat`, `ID_classes`, `id_option`, `code_cours`, `designation_cours`) VALUES (?,?,?,?,?,?,?)");
+        $req->execute(array($cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$code_cours,$designation_cours));
+        header("location: ajouter_cours.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function afficheCours($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_cours` INNER JOIN tb_option ON tb_option.ID_option = tb_cours.id_option JOIN tb_section ON tb_section.ID_section = tb_option.id_section JOIN tb_classes ON tb_classes.ID_classes = tb_cours.ID_classes JOIN tb_professeur ON tb_professeur.ID_prof = tb_cours.id_enseignat");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}

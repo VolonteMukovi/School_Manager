@@ -130,5 +130,23 @@ if (isset($_POST["btneditProf"])) {
 
     $eleveSup = editProf($db,$matricule, $nom, $postNom,$categorie,$salaire,$numTele,$adress,$photo,$id_Prof);
 
+}
+$id_Prof = $_SESSION["idprof"];
+if (isset($_GET["actions"]) and $_GET["actions"] == "supprimer") {
+    $eleveSup = deleteEleve($db,$id_Prof);
+}
 
+
+// ============================================================ COURS ====================================================
+
+if(isset($_POST["btnSaveCour"]))
+{
+    $designation = htmlspecialchars(ucwords($_POST["designation"]));
+    $enseignant = htmlspecialchars(ucwords($_POST["titulaire"]));
+    $cote_totale = htmlspecialchars(ucwords($_POST["cote_totale"]));
+    $classe = htmlspecialchars(ucwords($_POST["classes"]));
+    $option = htmlspecialchars(ucwords($_POST["option"]));
+    $nb_heures = htmlspecialchars(ucwords($_POST["nb_heures"]));
+
+    // saveCours($db,$cote_totale,$nb_heures,$enseignant,$classe,$option,$designation,);
 }
