@@ -115,3 +115,20 @@ if (isset($_POST["btnSaveProf"])) {
     $photo = $_FILES["photo"];
     saveProf($db, $matricule, $nom, $postNom,$categorie,$salaire,$numTele,$adress,$photo);
 }
+
+if (isset($_POST["btneditProf"])) {
+    $matricule = htmlspecialchars(ucwords($_POST["matricule"]));
+    $nom = htmlspecialchars(ucwords($_POST["nom"]));
+    $postNom = htmlspecialchars(ucwords($_POST["postNom"]));
+    $categorie = htmlspecialchars(ucwords($_POST["categorie"]));
+    $salaire = htmlspecialchars(ucwords($_POST["salaire"]));
+    $numTele = htmlspecialchars(ucwords($_POST["numTele"]));
+    $adress = htmlspecialchars(ucwords($_POST["adress"]));
+    $photo = $_FILES["photo"];
+   
+    $id_Prof = $_SESSION["idprof"];
+
+    $eleveSup = editProf($db,$matricule, $nom, $postNom,$categorie,$salaire,$numTele,$adress,$photo,$id_Prof);
+
+
+}

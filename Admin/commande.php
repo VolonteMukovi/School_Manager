@@ -192,7 +192,7 @@ function eleveEdit($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
             $req =  $db->prepare("UPDATE `tb_inscription` SET `id_classes_inscript`=?,`anneeScholair_inscript`=? WHERE `ID_inscription` =?");
             $req->execute(array($id_classes_inscript,$anneeScholair_inscript,$id_inscription));
             unset($_POST);
-            header("location: ajouts_eleves.php");
+            header("location: inscrits.php");
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -329,13 +329,10 @@ function editProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
             if (in_array($extension_upload, $extensions_autorisees)) {
                 if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
                     try {
-                        $req =  $db->prepare("UPDATE `tb_professeur` SET `ID_prof`=?,`Matricule_prof`=?,`Nom_prof`=?,`PostNom_prof`=?,`categorie_prof`=?,`salaire_prof`=?,`Numtel_prof`=?,`Adress_prof`=?,`photo_prof`=? WHERE `ID_prof`=?");
-                        $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof, basename($photo['name'])),$id_prof);
+                        $req =  $db->prepare("UPDATE `tb_professeur` SET `Matricule_prof`=?,`Nom_prof`=?,`PostNom_prof`=?,`categorie_prof`=?,`salaire_prof`=?,`Numtel_prof`=?,`Adress_prof`=?,`photo_prof`=? WHERE `ID_prof`=?");
+                        $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,basename($photo['name']),$id_prof));
                         unset($_POST);
-                        ?>
-                            <script>alert("Enrégistrement Réussit Avec Succèss")</script>
-                        <?php
-                        header("location: ajouts_prof.php");
+                        header("location: listes_prof.php");
                     } catch (PDOException $e) {
                         echo $e->getMessage();
                     }
@@ -349,7 +346,14 @@ function editProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
             echo "Veille verifier la taille de votre image peut etre il esg grand par rapport a la taille autorise";
         }
     } else {
-        echo "Votre image n'as pas pu etre trouver ou elle eroner rassayer svp";
+        try {
+            $req =  $db->prepare("UPDATE `tb_professeur` SET `Matricule_prof`=?,`Nom_prof`=?,`PostNom_prof`=?,`categorie_prof`=?,`salaire_prof`=?,`Numtel_prof`=?,`Adress_prof`=? WHERE `ID_prof`=?");
+            $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,$id_prof));
+            unset($_POST);
+            header("location: ajouts_prof.php");
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }
 
@@ -357,6 +361,17 @@ function afficheProf($db)
 {
     try {
         $req = $db->query("SELECT * FROM `tb_professeur`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function afficheProfEdit($db,$id_prof)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_professeur` WHERE `ID_prof`= '".$id_prof."' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {

@@ -12,10 +12,13 @@
 <body class="bg-gray-100 min-h-screen">
 
     <div class="flex">
-        <?php include "sidebar.php"; ?>
+        <?php include "sidebar.php";
+       
+        ?>
 
         <div class="flex-grow">
-            <?php include "header.php"; ?>
+            <?php include "header.php";
+            ?>
 
             <div class="p-6">
                 <h1 class="text-2xl font-bold text-gray-700 mb-6">Liste des Professeurs</h1>
@@ -55,8 +58,9 @@
                                     <td class="py-3 px-6 text-center"><?php echo $prof->Adress_prof ?></td>
                                     <td class="py-3 px-6 text-center">
                                         <div class="flex item-center justify-start">
+                                            <?php     $profEdit = afficheProfEdit($db,$prof->ID_prof);     ?>
                                             <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                <i class="fas fa-edit"></i>
+                                               <a href="ajouts_prof.php?action=edite&prof=<?php echo $prof->ID_prof;  ?>"> <i class="fas fa-edit"></i></a>
                                             </button>
                                             <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
                                                 <i class="fas fa-trash-alt"></i>
