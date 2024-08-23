@@ -65,7 +65,7 @@ if (isset($_POST["btnEditEleve"])) {
 }
 
 if (isset($_GET["action"]) and $_GET["action"] == "supprimer") {
-    $eleveSup = deleteEleve($db,$_GET["eleve"]);
+     deleteEleve($db,$_GET["eleve"]);
 }
 // ==================================================================== SALLE DE CLASSES ===============================================================
 
@@ -75,10 +75,9 @@ if (isset($_POST["btnAjoutClasses"])) {
     $option = htmlspecialchars($_POST["option"]);
     $section = htmlspecialchars($_POST["section"]);
     $titulaire = htmlspecialchars($_POST["titulaire"]);
-    saveClasses($db, $designation, $section, $option, $titulaire);
+    $montatPaye = htmlspecialchars($_POST["montatPayer"]);
+    saveClasses($db, $designation, $section, $option, $titulaire,$montatPaye);
 }
-
-
 
 
 // ==================================================================== OPTION ===============================================================
@@ -147,6 +146,27 @@ if(isset($_POST["btnSaveCour"]))
     $classe = htmlspecialchars(ucwords($_POST["classes"]));
     $option = htmlspecialchars(ucwords($_POST["option"]));
     $nb_heures = htmlspecialchars(ucwords($_POST["nb_heures"]));
+    $codeCour = htmlspecialchars(ucwords($_POST["codeCour"]));
+    $nb_heures = htmlspecialchars(ucwords($_POST["nb_heures"]));
 
-    // saveCours($db,$cote_totale,$nb_heures,$enseignant,$classe,$option,$designation,);
+
+    saveCours($db,$cote_totale,$nb_heures,$enseignant,$classe,$option,$designation,$codeCour);
+}
+
+
+
+if(isset($_POST["btneditCour"]))
+{
+    $designation = htmlspecialchars(ucwords($_POST["designation"]));
+    $enseignant = htmlspecialchars(ucwords($_POST["titulaire"]));
+    $cote_totale = htmlspecialchars(ucwords($_POST["cote_totale"]));
+    $classe = htmlspecialchars(ucwords($_POST["classes"]));
+    $option = htmlspecialchars(ucwords($_POST["option"]));
+    $nb_heures = htmlspecialchars(ucwords($_POST["nb_heures"]));
+    $codeCour = htmlspecialchars(ucwords($_POST["codeCour"]));
+    $nb_heures = htmlspecialchars(ucwords($_POST["nb_heures"]));
+
+    coursEdit($db,$cote_totale,$nb_heures,$enseignant,$classe,$option,$designation,$codeCour,$_SESSION["idcour"]);
+
+   
 }

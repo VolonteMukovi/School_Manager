@@ -56,7 +56,7 @@
                                 <td class="border-t py-2 px-4 text-center"><?php echo  $eleve->numeTelTuteur_eleve  ?></td>
                                 <td class="border-t py-2 px-4 text-center">
                                     <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i> <a href="ajouts_eleves.php?action=editer&eleve=<?php echo  $eleve->ID_eleve ?>">Éditer</a> </button>
-                                    <button class="text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i><a href="action.php?action=supprimer&eleve=<?php echo  $eleve->ID_eleve ?>">Supprimer</a> </button>
+                                    <button class="text-red-500 hover:text-red-700 ml-2"><i class="fas fa-trash"></i><a href="suppression.php?action=supprimer&eleve=<?php echo  $eleve->ID_eleve ?>">Supprimer</a> </button>
                                     <a href="infos_eleves_cours.php" class="text-green-500 hover:text-green-700 ml-2"><i class="fas fa-eye"></i> Consulter</a>
                                 </td>
                             </tr>

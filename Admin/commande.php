@@ -203,19 +203,19 @@ function eleveEdit($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
 function deleteEleve($db,$id_eleve)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_professeur` WHERE `ID_prof` = '".$id_eleve."' ");
-        header("location: listes_prof.php");
+        $req = $db->query("DELETE FROM `tb_eleve` WHERE `ID_eleve` = '".$id_eleve."' ");
+        header("location: inscrits.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
 // ==================================================================== SALLE DE CLASSES ===============================================================
-function saveClasses($db,$designation_class,$id_section,$id_option,$titulaire_class)
+function saveClasses($db,$designation_class,$id_section,$id_option,$titulaire_class,$montaPayer)
 {
     try {
-        $req = $db->prepare("INSERT INTO `tb_classes`(`designation_classes`, `id_section`, `id_option`, `titulaire_classes`) VALUES (?,?,?,?)");
-        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class));
+        $req = $db->prepare("INSERT INTO `tb_classes`(`designation_classes`, `id_section`, `id_option`, `titulaire_classes`,`montantPayeClass`) VALUES (?,?,?,?,?)");
+        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class,$montaPayer));
         header("location: ajouts_classes.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -414,12 +414,87 @@ function saveCours($db,$cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$i
     }
 }
 
+function deleteCours($db,$id_prof)
+{
+    try {
+        $req = $db->query("DELETE FROM `tb_cours` WHERE `ID_cours` = '".$id_prof."' ");
+        header("location: cours.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
 function afficheCours($db)
 {
     try {
         $req = $db->query("SELECT * FROM `tb_cours` INNER JOIN tb_option ON tb_option.ID_option = tb_cours.id_option JOIN tb_section ON tb_section.ID_section = tb_option.id_section JOIN tb_classes ON tb_classes.ID_classes = tb_cours.ID_classes JOIN tb_professeur ON tb_professeur.ID_prof = tb_cours.id_enseignat");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function afficheCouredit($db,$id_cours)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_cours` INNER JOIN tb_option ON tb_option.ID_option = tb_cours.id_option JOIN tb_section ON tb_section.ID_section = tb_option.id_section JOIN tb_classes ON tb_classes.ID_classes = tb_cours.ID_classes JOIN tb_professeur ON tb_professeur.ID_prof = tb_cours.id_enseignat WHERE `ID_cours`='".$id_cours."' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function coursEdit($db,$cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$code_cours,$designation_cours,$id_cour)
+{
+    try {
+        $req = $db->prepare("UPDATE `tb_cours` SET `cotetotal_cour`=?,`nbHeur_cour`=?,`id_enseignat`=?,`ID_classes`=?,`id_option`=?,`code_cours`=?,`designation_cours`=? WHERE `ID_cours`=?");
+        $req->execute(array($cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$code_cours,$designation_cours,$id_cour));
+        header("location: cours.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+// ==================================================================== EPREUVE =======================================================================
+function saveEpreuve($db,$epreuve)
+{
+    try {
+        $req = $db->prepare("INSERT INTO `tb_epreuve`(`epreuve`) VALUES (?)");
+        $req->execute(array($epreuve));
+        header("location: ajouter_cours.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function afficheEpreuvedit($db,$id_epreuve)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_epreuve` WHERE `Id_epreuve`='".$id_epreuve."'");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function epreuvedit($db,$id_epreuve)
+{
+    try {
+        $req = $db->query("UPDATE `tb_epreuve` SET `epreuve`=? WHERE `Id_epreuve`=?");
+        $req->execute(array($id_epreuve));
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function deletEpreuve($db,$id_epreuve)
+{
+    try {
+        $req = $db->query("DELETE FROM `tb_epreuve` WHERE `Id_epreuve` = '".$id_epreuve."' ");
+        header("location: cours.php");
     } catch (Exception $e) {
         $e->getMessage();
     }

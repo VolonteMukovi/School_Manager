@@ -28,6 +28,13 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="designation" class="block text-gray-700 font-bold mb-2">
+                            <i class="fas fa-tag mr-2"></i>Montant a payer
+                        </label>
+                        <input type="text" id="designation" name="montatPayer" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ex: Première A" required>
+                    </div>
+
+                    <div class="mb-4">
                         <label for="option" class="block text-gray-700 font-bold mb-2">
                             <i class="fas fa-book mr-2"></i>Option
                         </label>
