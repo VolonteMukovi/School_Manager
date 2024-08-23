@@ -14,4 +14,20 @@ else if (isset($_GET["cour"])) {
   if (isset($_GET["actions"]) and $_GET["actions"] == "supprimer") {
     $eleveSup = deleteCours($db, $id_Prof);
   }
+
+}
+
+if(isset($_GET["epreuve"])){
+  if (isset($_GET["action"]) and $_GET["action"]=="suppression")
+  {
+    deletEpreuve($db,$_GET["epreuve"]);
+  }
+}
+
+
+if(isset($_GET["periode"])){
+  if (isset($_GET["action"]) and $_GET["action"]=="suppression")
+  {
+    deletPeriode($db,$_GET["periode"]);
+  }
 }

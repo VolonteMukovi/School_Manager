@@ -457,13 +457,70 @@ function coursEdit($db,$cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$i
     }
 }
 
+// ==================================================================== PERIODE =======================================================================
+function savePeriode($db,$epreuve)
+{
+    try {
+        $req = $db->prepare("INSERT INTO `tb_periode`(`periode`) VALUES (?)");
+        $req->execute(array($epreuve));
+        header("location: periode.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function affichePeriodEdit($db,$id_periode)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_periode` WHERE `id_periode`= '".$id_periode."' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+function affichePeriode($db)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_periode`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function periodEdit($db,$id_periode,$periode)
+{
+    try {
+        $req = $db->prepare("UPDATE `tb_periode` SET `periode`=? WHERE `id_periode`=? ");
+        $req->execute(array($periode,$id_periode));
+        header("location: periode.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function deletPeriode($db,$id_periode)
+{
+    try {
+        $req = $db->query("DELETE FROM `tb_periode` WHERE `id_periode`='".$id_periode."'");
+        header("location: periode.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
 // ==================================================================== EPREUVE =======================================================================
 function saveEpreuve($db,$epreuve)
 {
     try {
         $req = $db->prepare("INSERT INTO `tb_epreuve`(`epreuve`) VALUES (?)");
         $req->execute(array($epreuve));
-        header("location: ajouter_cours.php");
+        header("location: epreuve.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -480,11 +537,24 @@ function afficheEpreuvedit($db,$id_epreuve)
     }
 }
 
-function epreuvedit($db,$id_epreuve)
+
+function afficheEpreuve($db)
 {
     try {
-        $req = $db->query("UPDATE `tb_epreuve` SET `epreuve`=? WHERE `Id_epreuve`=?");
-        $req->execute(array($id_epreuve));
+        $req = $db->query("SELECT * FROM `tb_epreuve`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function epreuvedit($db,$id_epreuve,$epreuve)
+{
+    try {
+        $req = $db->prepare("UPDATE `tb_epreuve` SET `epreuve`=? WHERE `Id_epreuve`=?");
+        $req->execute(array($epreuve,$id_epreuve));
+        header("location: epreuve.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -494,8 +564,9 @@ function deletEpreuve($db,$id_epreuve)
 {
     try {
         $req = $db->query("DELETE FROM `tb_epreuve` WHERE `Id_epreuve` = '".$id_epreuve."' ");
-        header("location: cours.php");
+        header("location: epreuve.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
+

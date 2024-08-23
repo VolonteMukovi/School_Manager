@@ -170,3 +170,32 @@ if(isset($_POST["btneditCour"]))
 
    
 }
+
+
+// ====================================================== EPREUVE ==============================================================
+if (isset($_POST["btnSave"])) {
+    $epreuve = htmlspecialchars($_POST["designation"]);
+    saveEpreuve($db,$epreuve);
+}
+
+if (isset($_POST["btnUpdate"])) {
+    $epreuve = htmlspecialchars($_POST["designation"]);
+    $id_epreuve = $_SESSION["idEpreuve"];
+    epreuvedit($db,$id_epreuve,$epreuve);
+    
+}
+
+
+
+// ====================================================== PERIODE ==============================================================
+if (isset($_POST["btnSavePeriode"])) {
+    $periode = htmlspecialchars($_POST["designation"]);
+    savePeriode($db,$periode);
+}
+
+if (isset($_POST["btnEditPeriode"])) {
+    $periode = htmlspecialchars($_POST["designation"]);
+    $id_periode = $_SESSION["idPeriode"];
+    periodEdit($db,$id_periode,$periode);   
+    
+}
