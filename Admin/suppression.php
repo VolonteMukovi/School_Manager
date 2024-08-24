@@ -55,3 +55,12 @@ if(isset($_GET["prof"])){
     deleteProf($db,$_GET["prof"]);
   }
 }
+
+//action=suppression&cour=10
+
+if(isset($_GET["classe"])){
+  if (isset($_GET["action"]) and $_GET["action"]=="suppression")
+  {
+    deleteClasses($db,$_GET["classe"]);
+  }
+}

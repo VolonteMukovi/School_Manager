@@ -79,6 +79,17 @@ if (isset($_POST["btnAjoutClasses"])) {
     saveClasses($db, $designation, $section, $option, $titulaire,$montatPaye);
 }
 
+if (isset($_POST["btnEditClass"])) {
+    $designation = htmlspecialchars(ucwords($_POST["designation"]));
+    $option = htmlspecialchars($_POST["option"]);
+    $section = htmlspecialchars($_POST["section"]);
+    $titulaire = htmlspecialchars($_POST["titulaire"]);
+    $montatPaye = htmlspecialchars($_POST["montatPayer"]);
+    editClasses($db,$designation,$section,$option,$titulaire,$montatPaye,$_SESSION["idClass"]);
+}
+
+
+
 
 // ==================================================================== OPTION ===============================================================
 

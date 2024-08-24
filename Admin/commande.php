@@ -246,17 +246,28 @@ function afficheClasses($db)
 }
 
 
-function editClasses($db,$designation_class,$id_section,$id_option,$titulaire_class,$montaPayer)
+function editClasses($db,$designation_class,$id_section,$id_option,$titulaire_class,$montaPayer,$id_class)
 {
     try {
         $req = $db->prepare("UPDATE `tb_classes` SET `designation_classes`=?,`id_section`=?,`id_option`=?,`titulaire_classes`=?,`montantPayeClass`=? WHERE `ID_classes`=?");
-        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class,$montaPayer));
+        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class,$montaPayer,$id_class));
         header("location: ajouts_classes.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
+
+function deleteClasses($db,$id_class)
+{
+    try {
+        $req = $db->prepare("DELETE FROM `tb_classes` WHERE `ID_classes`=?");
+        $req->execute(array($id_class));
+        header("location: classes.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
 
 
 // ==================================================================== OPTIONS ===============================================================
