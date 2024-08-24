@@ -57,7 +57,7 @@
                                             <a href="suppression.php?actions=supprimer&cour=<?php echo $cour->ID_cours  ?>" class="text-red-500 hover:text-red-700">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
-                                            <a href="consulter_cours.php" class="text-green-500 hover:text-green-700">
+                                            <a href="consulter_cours.php?action=conslulter&cour=<?php echo $cour->ID_cours  ?>" class="text-green-500 hover:text-green-700">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </div>

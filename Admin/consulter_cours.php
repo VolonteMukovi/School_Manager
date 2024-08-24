@@ -14,26 +14,48 @@
 
         <div class="flex-grow">
             <?php include "header.php"; ?>
-
+            <?php     
+                         if (isset($_GET["cour"])) {
+                            if (isset($_GET["action"]) and $_GET["action"] == "conslulter") {
+                                $coursEdit = afficheCouredit($db, $_GET["cour"]);
+                                foreach ($coursEdit as $cour) {
+            
+                                    $id_cours = $cour->ID_cours;
+                                    $coteCour = $cour->cotetotal_cour;
+                                    $nbHeurCour = $cour->nbHeur_cour;
+                                    $enseignat = $cour->id_enseignat;
+                                    $id_class = $cour->ID_classes;
+                                    $id_option = $cour->id_option;
+                                    $codeCour = $cour->code_cours;
+                                    $designationCour = $cour->designation_cours;
+                                    $class = $cour->designation_classes;
+                                    $designationOption = $cour->designation_option;
+                                    $nomEnseignat = $cour->Nom_prof."  ".$cour->PostNom_prof;
+                                    $designation_option = $cour->designation_option;
+                                }
+                            }
+                        }
+            
+            ?>
             <div class="p-6 space-y-6"> 
-                
+            
                 <div class="bg-white shadow-md rounded-lg p-6">
                     <h2 class="text-xl font-semibold text-gray-700 mb-4">Informations du Cours</h2>
                     
                     <div class="mb-4">
-                        <h2 class="text-lg font-bold text-gray-700">Cours : <span class="text-gray-600">Histoire</span></h2>
+                        <h2 class="text-lg font-bold text-gray-700">Cours : <span class="text-gray-600"><?php echo $designationCour     ?></span></h2>
                     </div>
 
                     <div class="mb-4">
-                        <h2 class="block text-gray-700 font-bold">Enseignant : <span class="text-gray-600">Waridi</span></h2>
+                        <h2 class="block text-gray-700 font-bold">Enseignant : <span class="text-gray-600"><?php echo $nomEnseignat    ?></span></h2>
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Classe : <span class="text-gray-600">5ème A</span></label>
+                        <label class="block text-gray-700 font-bold">Classe : <span class="text-gray-600"><?php echo $class     ?></span></label>
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Cote Totale : <span class="text-gray-600">50</span></label>
+                        <label class="block text-gray-700 font-bold">Cote Totale : <span class="text-gray-600"><?php  echo $coteCour ?></span></label>
                     </div>
                 </div>
 

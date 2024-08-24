@@ -62,7 +62,7 @@
                                     <i class="fas fa-book mr-2"></i>Option
                                 </label>
                                 <?php $afficheOption = afficheOption($db); ?>
-                                <select id="option" name="option" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                <select id="option" name="option" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
                                     <option value="<?php echo $iD_option     ?>"><?php echo  $designation_option     ?></option>
                                     <?php foreach ($afficheOption as $option) { ?>
                                         <option value="<?php echo $option->ID_option ?>"><?php echo $option->designation_option ?></option>
@@ -76,7 +76,7 @@
                                     <i class="fas fa-building mr-2"></i>Section
                                 </label>
                                 <?php $affichesection = afficheSection($db); ?>
-                                <select id="section" name="section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                <select id="section" name="section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" >
                                     <option value="<?php echo $iD_section    ?>"><?php echo $designation_section      ?></option>
                                     <?php foreach ($affichesection as $section) { ?>
                                         <option value="<?php echo $section->ID_section ?>"><?php echo $section->designation_section ?></option>

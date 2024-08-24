@@ -187,7 +187,7 @@ session_start();?>
                                     <i class="fas fa-graduation-cap mr-2"></i> Annee
                                 </label>
                                 <?php $annees = AfficheAnnee($db);   ?>
-                                <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="anneInscription" id="option">
+                                <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="anneInscription" id="option" req >
                                 <option value="<?php echo $id_anne;  ?>"><?php echo $anne;  ?></option>
                                     <?php foreach ($annees as $annee) {  ?>
                                         <option value="<?php echo $annee->ID_anne_scholaire  ?>"><?php echo $annee->annee . "  " . $annee->status  ?></option>
@@ -278,7 +278,7 @@ session_start();?>
                             </label>
                             <?php $listeClass = afficheClasses($db);   ?>
                             <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="classes" id="option">
-                                <option value="classe1">Sélectionner Une Classe</option>
+                                <option value="">Sélectionner Une Classe</option>
                                 <?php foreach ($listeClass as $classe) {  ?>
                                     <option value="<?php echo $classe->ID_classes  ?>"><?php echo $classe->designation_classes . "   " . $classe->designation_option     ?></option>
                                 <?php  } ?>
@@ -321,8 +321,8 @@ session_start();?>
                                 <i class="fas fa-graduation-cap mr-2"></i> Annee
                             </label>
                             <?php $annees = AfficheAnnee($db);   ?>
-                            <select required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="anneInscription" id="option">
-                                <option value="classe1">Sélectionner L'Année</option>
+                            <select  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="anneInscription" id="option" required>
+                            
                                 <?php foreach ($annees as $annee) {  ?>
                                     <option value="<?php echo $annee->ID_anne_scholaire  ?>"><?php echo $annee->annee . "  " . $annee->status  ?></option>
                                 <?php  } ?>
