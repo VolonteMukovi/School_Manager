@@ -31,3 +31,27 @@ if(isset($_GET["periode"])){
     deletPeriode($db,$_GET["periode"]);
   }
 }
+
+
+if(isset($_GET["section"])){
+  if (isset($_GET["action"]) and $_GET["action"]=="suppression")
+  {
+    sectionDelete($db,$_GET["section"]);
+  }
+}
+
+
+
+if(isset($_GET["option"])){
+  if (isset($_GET["action"]) and $_GET["action"]=="suppression")
+  {
+    optionDelete($db,$_GET["option"]);
+  }
+}
+
+if(isset($_GET["prof"])){
+  if (isset($_GET["actions"]) and $_GET["actions"]=="supprimer")
+  {
+    deleteProf($db,$_GET["prof"]);
+  }
+}

@@ -46,12 +46,12 @@
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
                                         <button class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <i class="fas fa-edit"></i>
+                                            <a href="ajouts_classes.php?action=edit&class=<?php echo $classe->ID_classes ?>"><i class="fas fa-edit"></i></a> 
                                         </button>
                                         <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
-                                            <i class="fas fa-trash-alt"></i>
+                                            <a href="ajouts_classes.php?action=edit&cour=<?php echo $cour->ID_classes ?>" ><i class="fas fa-trash-alt"></i></a>
                                         </button>
-                                        <a href="consulter_classes.php" class="w-4 transform hover:text-blue-500 hover:scale-110">
+                                        <a href="ajouts_classes.php?action=edit&cour=<?php echo $cour->ID_classes ?>" class="w-4 transform hover:text-blue-500 hover:scale-110">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </div>

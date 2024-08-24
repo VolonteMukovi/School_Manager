@@ -21,13 +21,13 @@
                     $periodes = affichePeriodEdit($db, $_GET["epreuve"]);
                     foreach ($periodes as $periode) {
                         $periode = $periode->periode;
-                        $id_periode = $periode->id_periode;
+                        @$id_periode = $periode->id_periode;
+                       
                     }
-                    $_SESSION["idPeriode"] = $id_periode;
+                    $_SESSION["idPeriode"] = $_GET["epreuve"];
             ?>  
                     <main class="p-6">
                         <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Ajouter une Période</h2>
-
                         <form method="post" action="action.php" class="bg-white p-6 rounded shadow-md w-full max-w-lg mx-auto">
                             <div class="mb-4 flex items-center">
                                 <div class="w-full">
@@ -37,7 +37,7 @@
                             </div>
                             <div class="text-center">
                                 <button name="btnEditPeriode" type="submit" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow hover:bg-gray-400">
-                                    Modifierrrr
+                                    Modifier
                                 </button>
                             </div>
                         </form>

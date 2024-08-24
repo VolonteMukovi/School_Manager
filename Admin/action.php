@@ -99,6 +99,12 @@ if (isset($_POST["btnSaveSection"])) {
     saveSection($db,$designation);
 }
 
+if (isset($_POST["btnUpdateSection"])) {
+    $designation = htmlspecialchars(ucwords($_POST["designation"]));
+    $idSection = $_SESSION["idSection"];
+    sectionEdit($db,$idSection,$designation);
+}
+
 
 
 // ===================================================================================== PROFFESEURS ================================================================================================
@@ -195,7 +201,15 @@ if (isset($_POST["btnSavePeriode"])) {
 
 if (isset($_POST["btnEditPeriode"])) {
     $periode = htmlspecialchars($_POST["designation"]);
-    $id_periode = $_SESSION["idPeriode"];
-    periodEdit($db,$id_periode,$periode);   
+
+   $id_periode = $_SESSION["idPeriode"];
+
+
+    echo $id_periode;
+
+
+    periodEdit($db,$id_periode,$periode);  
+    
+    
     
 }

@@ -1,5 +1,5 @@
 <?php
-// ================================= LOGIN ADMIN ======================================
+// ======================================================== LOGIN ADMIN =======================================================================================================
 function loginAdmin($db, $pseudo, $pwd)
 {
     try {
@@ -222,12 +222,36 @@ function saveClasses($db,$designation_class,$id_section,$id_option,$titulaire_cl
     }
 }
 
+function afficheClassesEdit($db,$id_classes)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_classes` INNER JOIN tb_section ON tb_section.ID_section=tb_classes.id_section INNER JOIN tb_option ON tb_option.ID_option=tb_classes.id_option INNER JOIN tb_professeur ON tb_professeur.ID_prof=tb_classes.titulaire_classes  WHERE `ID_classes`='".$id_classes."' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
 function afficheClasses($db)
 {
     try {
         $req = $db->query("SELECT * FROM `tb_classes` INNER JOIN tb_section ON tb_section.ID_section=tb_classes.id_section INNER JOIN tb_option ON tb_option.ID_option=tb_classes.id_option INNER JOIN tb_professeur ON tb_professeur.ID_prof=tb_classes.titulaire_classes");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+function editClasses($db,$designation_class,$id_section,$id_option,$titulaire_class,$montaPayer)
+{
+    try {
+        $req = $db->prepare("UPDATE `tb_classes` SET `designation_classes`=?,`id_section`=?,`id_option`=?,`titulaire_classes`=?,`montantPayeClass`=? WHERE `ID_classes`=?");
+        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class,$montaPayer));
+        header("location: ajouts_classes.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -250,9 +274,42 @@ function saveOption($db,$designation_option,$id_section)
 function afficheOption($db)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_option`");
+        $req = $db->query("SELECT * FROM `tb_option` INNER JOIN tb_section ON tb_section.ID_section = tb_option.id_section");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+function updateOption($db,$designation_option,$id_section)
+{
+    try {
+        $req =  $db->prepare("UPDATE `tb_option` SET = `designation_option`=?,`id_section`=? WHERE `ID_option`=?");
+        $req->execute(array($db,$designation_option,$id_section));
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+function afficheOptionEdit($db,$id_option)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_option` INNER JOIN tb_section ON tb_section.ID_section = tb_option.id_section WHERE `ID_option` = '".$id_option."' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+function optionDelete($db,$id_section)
+{
+    try {
+        $req = $db->prepare("DELETE FROM `tb_option` WHERE `ID_option` = '".$id_section."' ");
+        $req->execute(array($id_section));
+        header("location: options.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -281,6 +338,39 @@ function afficheSection($db)
     }
 }
 
+function afficheSectionEdit($db,$id_section)
+{
+    try {
+        $req = $db->query("SELECT * FROM `tb_section` WHERE `ID_section`= '".$id_section."' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function sectionEdit($db,$id_section,$designationSection)
+{
+    try {
+        $req = $db->prepare("UPDATE `tb_section` SET `designation_section`=? WHERE `ID_section`=? ");
+        $req->execute(array($designationSection,$id_section));
+        header("location: section.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+function sectionDelete($db,$id_section)
+{
+    try {
+        $req = $db->prepare("DELETE FROM `tb_section` WHERE `ID_section`=?");
+        $req->execute(array($id_section));
+        header("location: section.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
 
 // ==================================================================== PROFFESEURS ===============================================================
 
@@ -393,7 +483,7 @@ function afficheProfCours($db,$id_prof)
 function deleteProf($db,$id_prof)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_professeur` WHERE = '".$id_prof."' ");
+        $req = $db->query("DELETE FROM `tb_professeur` WHERE `ID_prof` = '".$id_prof."' ");
         header("location: listes_prof.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -495,7 +585,7 @@ function affichePeriode($db)
 function periodEdit($db,$id_periode,$periode)
 {
     try {
-        $req = $db->prepare("UPDATE `tb_periode` SET `periode`=? WHERE `id_periode`=? ");
+        $req = $db->prepare("UPDATE `tb_periode` SET `periode`=? WHERE `id_periode`=?");
         $req->execute(array($periode,$id_periode));
         header("location: periode.php");
     } catch (Exception $e) {
