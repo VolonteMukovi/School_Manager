@@ -66,7 +66,7 @@
 
                 <?php $annees = AfficheAnnee($db);
                 foreach ($annees as $annee) {
-                    if ($annee->status == "Clôturer") { ?>
+                    if ($annee->status == "Cloturer") { ?>
                         <div class="flex items-center justify-between bg-white p-4 rounded shadow-md mx-2 mb-2">
                             <span class="text-lg font-semibold text-gray-700"><?php echo $annee->status ?> : <span class="font-bold text-[#16C8FF]"><?php echo $annee->annee ?></span></span>
                             <div>
@@ -79,7 +79,12 @@
                                         } ?>
                             <span disabled class=" ml-4 bg-red-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-red-600">
                                 <i class="fas fa-times-circle mr-2"></i> Clôturer
+                            </span> 
+
+                            <span class=" ml-4 bg-green-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-green-600">
+                               <a href="inscrits.php?action=consulter&annee=<?php echo $annee->annee  ?>&status=<?php echo $annee->status ?>"><i class="fas fa-eye"></i> Consulter</a> 
                             </span>
+                            
                             </div>
                         </div>
                     <?php } else{

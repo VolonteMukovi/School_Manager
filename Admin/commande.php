@@ -43,9 +43,21 @@ function editAdmin($db, $pseudo, $pwd)
 function saveAnne($db, $anne)
 {
     try {
-        $req = $db->prepare("INSERT INTO `tb_annee_scholaire`(`annee`) VALUES (?)");
-        $req->execute(array($anne));
-        header("location: dasboard.php");
+        $anneeEncours = 'Annee en cours';
+        $req = $db->query("SELECT * FROM `tb_annee_scholaire` WHERE tb_annee_scholaire.status = '" . $anneeEncours . "' ORDER BY `annee` DESC");
+        if ($req->rowCount() > 0) {
+?>
+            <script>
+                alert("Il existe déjà L'année en cours , Pour Commencer l'autre Cloturer se qui est En cours");
+                window.location.href = "dasboard.php";
+            </script>
+            <?php
+
+        } else {
+            $req = $db->prepare("INSERT INTO `tb_annee_scholaire`(`annee`) VALUES (?)");
+            $req->execute(array($anne));
+            header("location: dasboard.php");
+        }
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -65,13 +77,28 @@ function editAnne($db, $anne, $status, $id)
 function AfficheAnnee($db)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_annee_scholaire` ORDER BY `annee` DESC");
+        $req = $db->query("SELECT * FROM `tb_annee_scholaire ORDER BY `annee` DESC");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
+
+function AfficheAnneePasser($db)
+{
+    try {
+        $annee = 'Annee en cours';
+        $req = $db->query("SELECT * FROM `tb_annee_scholaire` WHERE tb_annee_scholaire.status='" . $annee . "' ORDER BY `annee` DESC");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+
 
 function anneeEncours($db)
 {
@@ -89,7 +116,7 @@ function clotureAnne($db, $id)
 {
     try {
         $req = $db->prepare("UPDATE `tb_annee_scholaire` SET `status`=? WHERE `ID_anne_scholaire`=?");
-        $req->execute(array("Clôturer", $id));
+        $req->execute(array("Cloturer", $id));
     } catch (Exception $e) {
         $e->getMessage();
     }
@@ -97,7 +124,7 @@ function clotureAnne($db, $id)
 
 // ==================================================================== INSCRIPTION ELEVE ===============================================================
 
-function saveEleve($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,$photo,$id_classes_inscript,$anneeScholair_inscript)
+function saveEleve($db, $matricule_eleve, $nom_eleve, $postnom, $code, $genre_eleve, $lieuNaissance_eleve, $dateNaissance_eleve, $adress_eleve, $ecoleOrigine_eleve, $numePerma_eleve, $nomTuteur_eleve, $numeTelTuteur_eleve, $nationalite_eleve, $photo, $id_classes_inscript, $anneeScholair_inscript)
 {
     if (isset($photo) and $photo['error'] == 0) {
         if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
@@ -108,14 +135,16 @@ function saveEleve($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
                 if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
                     try {
                         $req =  $db->prepare("INSERT INTO `tb_eleve`(`Matricule_eleve`, `Nom_eleve`, `postnom`, `code`, `genre_eleve`, `lieuNaissance_eleve`, `dateNaissance_eleve`, `adress_eleve`, `ecoleOrigine_eleve`, `numePerma_eleve`, `nomTuteur_eleve`, `numeTelTuteur_eleve`, `Nationalite_eleve`, `Photo_eleve`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                        $req->execute(array($matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,basename($photo['name'])));
+                        $req->execute(array($matricule_eleve, $nom_eleve, $postnom, $code, $genre_eleve, $lieuNaissance_eleve, $dateNaissance_eleve, $adress_eleve, $ecoleOrigine_eleve, $numePerma_eleve, $nomTuteur_eleve, $numeTelTuteur_eleve, $nationalite_eleve, basename($photo['name'])));
                         $id_eleve_inscript = $db->lastInsertId();
                         $req =  $db->prepare("INSERT INTO `tb_inscription`(`id_eleve_inscript`, `id_classes_inscript`, `anneeScholair_inscript`) VALUES (?,?,?)");
-                        $req->execute(array($id_eleve_inscript,$id_classes_inscript,$anneeScholair_inscript));
+                        $req->execute(array($id_eleve_inscript, $id_classes_inscript, $anneeScholair_inscript));
                         unset($_POST);
-                        ?>
-                            <script>alert("Enrégistrement Réussit Avec Succèss")</script>
-                        <?php
+            ?>
+                        <script>
+                            alert("Enrégistrement Réussit Avec Succèss")
+                        </script>
+                    <?php
                         header("location: ajouts_eleves.php");
                     } catch (PDOException $e) {
                         echo $e->getMessage();
@@ -137,8 +166,8 @@ function saveEleve($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
 function afficheEleve($db)
 {
     try {
-        $annee="Annee en cours";
-        $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_annee_scholaire.status='".$annee."'");
+        $annee = "Annee en cours";
+        $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_annee_scholaire.status='" . $annee . "'");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -146,11 +175,11 @@ function afficheEleve($db)
     }
 }
 
-function afficheEleveEdit($db,$id_eleve)
+function afficheEleveEdit($db, $id_eleve)
 {
     try {
-        $annee="Annee en cours";
-        $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_annee_scholaire.status='".$annee."' and tb_eleve.ID_eleve = '" . $id_eleve. "' ");
+        $annee = "Annee en cours";
+        $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_annee_scholaire.status='" . $annee . "' and tb_eleve.ID_eleve = '" . $id_eleve . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -158,7 +187,7 @@ function afficheEleveEdit($db,$id_eleve)
     }
 }
 
-function eleveEdit($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,$photo,$id_classes_inscript,$anneeScholair_inscript,$ide_eleve,$id_inscription)
+function eleveEdit($db, $matricule_eleve, $nom_eleve, $postnom, $code, $genre_eleve, $lieuNaissance_eleve, $dateNaissance_eleve, $adress_eleve, $ecoleOrigine_eleve, $numePerma_eleve, $nomTuteur_eleve, $numeTelTuteur_eleve, $nationalite_eleve, $photo, $id_classes_inscript, $anneeScholair_inscript, $ide_eleve, $id_inscription)
 {
     if (isset($photo) and $photo['error'] == 0) {
         if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
@@ -169,9 +198,9 @@ function eleveEdit($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
                 if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
                     try {
                         $req =  $db->prepare("UPDATE `tb_eleve` SET `Matricule_eleve`=?,`Nom_eleve`=?,`postnom`=?,`code`=?,`genre_eleve`=?,`lieuNaissance_eleve`=?,`dateNaissance_eleve`=?,`adress_eleve`=?,`ecoleOrigine_eleve`=?,`numePerma_eleve`=?,`nomTuteur_eleve`=?,`numeTelTuteur_eleve`=?,`Nationalite_eleve`=?, `Photo_eleve`=? WHERE `ID_eleve`=?");
-                         $req->execute(array($matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,basename($photo['name']),$ide_eleve));
+                        $req->execute(array($matricule_eleve, $nom_eleve, $postnom, $code, $genre_eleve, $lieuNaissance_eleve, $dateNaissance_eleve, $adress_eleve, $ecoleOrigine_eleve, $numePerma_eleve, $nomTuteur_eleve, $numeTelTuteur_eleve, $nationalite_eleve, basename($photo['name']), $ide_eleve));
                         $req =  $db->prepare("UPDATE `tb_inscription` SET `id_classes_inscript`=?,`anneeScholair_inscript`=? WHERE `ID_inscription` =?");
-                        $req->execute(array($id_classes_inscript,$anneeScholair_inscript,$id_inscription));
+                        $req->execute(array($id_classes_inscript, $anneeScholair_inscript, $id_inscription));
                         unset($_POST);
                         header("location: ajouts_eleves.php");
                     } catch (PDOException $e) {
@@ -187,47 +216,57 @@ function eleveEdit($db,$matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$
             echo "Veille verifier la taille de votre image peut etre il esg grand par rapport a la taille autorise";
         }
     } else {
-       
+
         try {
             $req =  $db->prepare("UPDATE `tb_eleve` SET `Matricule_eleve`=?,`Nom_eleve`=?,`postnom`=?,`code`=?,`genre_eleve`=?,`lieuNaissance_eleve`=?,`dateNaissance_eleve`=?,`adress_eleve`=?,`ecoleOrigine_eleve`=?,`numePerma_eleve`=?,`nomTuteur_eleve`=?,`numeTelTuteur_eleve`=?,`Nationalite_eleve`=? WHERE `ID_eleve`=?");
-            $req->execute(array($matricule_eleve,$nom_eleve,$postnom,$code,$genre_eleve,$lieuNaissance_eleve,$dateNaissance_eleve,$adress_eleve,$ecoleOrigine_eleve,$numePerma_eleve,$nomTuteur_eleve,$numeTelTuteur_eleve,$nationalite_eleve,$ide_eleve));
+            $req->execute(array($matricule_eleve, $nom_eleve, $postnom, $code, $genre_eleve, $lieuNaissance_eleve, $dateNaissance_eleve, $adress_eleve, $ecoleOrigine_eleve, $numePerma_eleve, $nomTuteur_eleve, $numeTelTuteur_eleve, $nationalite_eleve, $ide_eleve));
             $req =  $db->prepare("UPDATE `tb_inscription` SET `id_classes_inscript`=?,`anneeScholair_inscript`=? WHERE `ID_inscription` =?");
-            $req->execute(array($id_classes_inscript,$anneeScholair_inscript,$id_inscription));
+            $req->execute(array($id_classes_inscript, $anneeScholair_inscript, $id_inscription));
             unset($_POST);
             header("location: inscrits.php");
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-
     }
 }
 
-function deleteEleve($db,$id_eleve)
+function deleteEleve($db, $id_eleve)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_eleve` WHERE `ID_eleve` = '".$id_eleve."' ");
+        $req = $db->query("DELETE FROM `tb_eleve` WHERE `ID_eleve` = '" . $id_eleve . "' ");
         header("location: inscrits.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
+function AfficheAnneePasserEleve($db, $annee, $status)
+{
+    try {
+        $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_annee_scholaire.annee ='" . $annee . "' AND `status`='" . $status . "'");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
 // ==================================================================== SALLE DE CLASSES ===============================================================
-function saveClasses($db,$designation_class,$id_section,$id_option,$titulaire_class,$montaPayer)
+function saveClasses($db, $designation_class, $id_section, $id_option, $titulaire_class, $montaPayer)
 {
     try {
         $req = $db->prepare("INSERT INTO `tb_classes`(`designation_classes`, `id_section`, `id_option`, `titulaire_classes`,`montantPayeClass`) VALUES (?,?,?,?,?)");
-        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class,$montaPayer));
+        $req->execute(array($designation_class, $id_section, $id_option, $titulaire_class, $montaPayer));
         header("location: ajouts_classes.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
-function afficheClassesEdit($db,$id_classes)
+function afficheClassesEdit($db, $id_classes)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_classes` INNER JOIN tb_section ON tb_section.ID_section=tb_classes.id_section INNER JOIN tb_option ON tb_option.ID_option=tb_classes.id_option INNER JOIN tb_professeur ON tb_professeur.ID_prof=tb_classes.titulaire_classes  WHERE `ID_classes`='".$id_classes."' ");
+        $req = $db->query("SELECT * FROM `tb_classes` INNER JOIN tb_section ON tb_section.ID_section=tb_classes.id_section INNER JOIN tb_option ON tb_option.ID_option=tb_classes.id_option INNER JOIN tb_professeur ON tb_professeur.ID_prof=tb_classes.titulaire_classes  WHERE `ID_classes`='" . $id_classes . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -248,11 +287,11 @@ function afficheClasses($db)
 }
 
 
-function editClasses($db,$designation_class,$id_section,$id_option,$titulaire_class,$montaPayer,$id_class)
+function editClasses($db, $designation_class, $id_section, $id_option, $titulaire_class, $montaPayer, $id_class)
 {
     try {
         $req = $db->prepare("UPDATE `tb_classes` SET `designation_classes`=?,`id_section`=?,`id_option`=?,`titulaire_classes`=?,`montantPayeClass`=? WHERE `ID_classes`=?");
-        $req->execute(array($designation_class,$id_section,$id_option,$titulaire_class,$montaPayer,$id_class));
+        $req->execute(array($designation_class, $id_section, $id_option, $titulaire_class, $montaPayer, $id_class));
         header("location: ajouts_classes.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -260,7 +299,7 @@ function editClasses($db,$designation_class,$id_section,$id_option,$titulaire_cl
 }
 
 
-function deleteClasses($db,$id_class)
+function deleteClasses($db, $id_class)
 {
     try {
         $req = $db->prepare("DELETE FROM `tb_classes` WHERE `ID_classes`=?");
@@ -272,12 +311,13 @@ function deleteClasses($db,$id_class)
 }
 
 
+
 // ==================================================================== OPTIONS ===============================================================
-function saveOption($db,$designation_option,$id_section)
+function saveOption($db, $designation_option, $id_section)
 {
     try {
         $req = $db->prepare("INSERT INTO `tb_option`(`designation_option`, `id_section`) VALUES (?,?)");
-        $req->execute(array($designation_option,$id_section));
+        $req->execute(array($designation_option, $id_section));
         header("location: ajout_option.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -294,21 +334,21 @@ function afficheOption($db)
         $e->getMessage();
     }
 }
-function updateOption($db,$designation_option,$id_section)
+function updateOption($db, $designation_option, $id_section)
 {
     try {
         $req =  $db->prepare("UPDATE `tb_option` SET = `designation_option`=?,`id_section`=? WHERE `ID_option`=?");
-        $req->execute(array($db,$designation_option,$id_section));
+        $req->execute(array($db, $designation_option, $id_section));
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
 
-function afficheOptionEdit($db,$id_option)
+function afficheOptionEdit($db, $id_option)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_option` INNER JOIN tb_section ON tb_section.ID_section = tb_option.id_section WHERE `ID_option` = '".$id_option."' ");
+        $req = $db->query("SELECT * FROM `tb_option` INNER JOIN tb_section ON tb_section.ID_section = tb_option.id_section WHERE `ID_option` = '" . $id_option . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -317,10 +357,10 @@ function afficheOptionEdit($db,$id_option)
 }
 
 
-function optionDelete($db,$id_section)
+function optionDelete($db, $id_section)
 {
     try {
-        $req = $db->prepare("DELETE FROM `tb_option` WHERE `ID_option` = '".$id_section."' ");
+        $req = $db->prepare("DELETE FROM `tb_option` WHERE `ID_option` = '" . $id_section . "' ");
         $req->execute(array($id_section));
         header("location: options.php");
     } catch (Exception $e) {
@@ -329,7 +369,7 @@ function optionDelete($db,$id_section)
 }
 
 // ==================================================================== SECTIONS ===============================================================
-function saveSection($db,$designation_section)
+function saveSection($db, $designation_section)
 {
     try {
         $req = $db->prepare("INSERT INTO `tb_section`(`designation_section`) VALUES (?)");
@@ -351,10 +391,10 @@ function afficheSection($db)
     }
 }
 
-function afficheSectionEdit($db,$id_section)
+function afficheSectionEdit($db, $id_section)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_section` WHERE `ID_section`= '".$id_section."' ");
+        $req = $db->query("SELECT * FROM `tb_section` WHERE `ID_section`= '" . $id_section . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -362,11 +402,11 @@ function afficheSectionEdit($db,$id_section)
     }
 }
 
-function sectionEdit($db,$id_section,$designationSection)
+function sectionEdit($db, $id_section, $designationSection)
 {
     try {
         $req = $db->prepare("UPDATE `tb_section` SET `designation_section`=? WHERE `ID_section`=? ");
-        $req->execute(array($designationSection,$id_section));
+        $req->execute(array($designationSection, $id_section));
         header("location: section.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -374,7 +414,7 @@ function sectionEdit($db,$id_section,$designationSection)
 }
 
 
-function sectionDelete($db,$id_section)
+function sectionDelete($db, $id_section)
 {
     try {
         $req = $db->prepare("DELETE FROM `tb_section` WHERE `ID_section`=?");
@@ -387,7 +427,7 @@ function sectionDelete($db,$id_section)
 
 // ==================================================================== PROFFESEURS ===============================================================
 
-function saveProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,$photo)
+function saveProf($db, $matricule_prof, $nom_prof, $postNom_prof, $categorie_prof, $salaire_prof, $numtel_prof, $adress_prof, $photo)
 {
     if (isset($photo) and $photo['error'] == 0) {
         if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
@@ -398,11 +438,13 @@ function saveProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
                 if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
                     try {
                         $req =  $db->prepare("INSERT INTO `tb_professeur`(`Matricule_prof`, `Nom_prof`, `PostNom_prof`, `categorie_prof`, `salaire_prof`, `Numtel_prof`, `Adress_prof`, `photo_prof`) VALUES (?,?,?,?,?,?,?,?)");
-                        $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof, basename($photo['name'])));
+                        $req->execute(array($matricule_prof, $nom_prof, $postNom_prof, $categorie_prof, $salaire_prof, $numtel_prof, $adress_prof, basename($photo['name'])));
                         unset($_POST);
-                        ?>
-                            <script>alert("Enrégistrement Réussit Avec Succèss")</script>
-                        <?php
+                    ?>
+                        <script>
+                            alert("Enrégistrement Réussit Avec Succèss")
+                        </script>
+<?php
                         header("location: ajouts_prof.php");
                     } catch (PDOException $e) {
                         echo $e->getMessage();
@@ -422,7 +464,7 @@ function saveProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
 }
 
 
-function editProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,$photo,$id_prof)
+function editProf($db, $matricule_prof, $nom_prof, $postNom_prof, $categorie_prof, $salaire_prof, $numtel_prof, $adress_prof, $photo, $id_prof)
 {
     if (isset($photo) and $photo['error'] == 0) {
         if ($photo['size'] <= 1000000000000000000000000000000000000000000000000000000000000) {
@@ -433,7 +475,7 @@ function editProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
                 if (move_uploaded_file($photo['tmp_name'], './Images/' . basename($photo['name']))) {
                     try {
                         $req =  $db->prepare("UPDATE `tb_professeur` SET `Matricule_prof`=?,`Nom_prof`=?,`PostNom_prof`=?,`categorie_prof`=?,`salaire_prof`=?,`Numtel_prof`=?,`Adress_prof`=?,`photo_prof`=? WHERE `ID_prof`=?");
-                        $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,basename($photo['name']),$id_prof));
+                        $req->execute(array($matricule_prof, $nom_prof, $postNom_prof, $categorie_prof, $salaire_prof, $numtel_prof, $adress_prof, basename($photo['name']), $id_prof));
                         unset($_POST);
                         header("location: listes_prof.php");
                     } catch (PDOException $e) {
@@ -451,7 +493,7 @@ function editProf($db,$matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$s
     } else {
         try {
             $req =  $db->prepare("UPDATE `tb_professeur` SET `Matricule_prof`=?,`Nom_prof`=?,`PostNom_prof`=?,`categorie_prof`=?,`salaire_prof`=?,`Numtel_prof`=?,`Adress_prof`=? WHERE `ID_prof`=?");
-            $req->execute(array($matricule_prof,$nom_prof,$postNom_prof,$categorie_prof,$salaire_prof,$numtel_prof,$adress_prof,$id_prof));
+            $req->execute(array($matricule_prof, $nom_prof, $postNom_prof, $categorie_prof, $salaire_prof, $numtel_prof, $adress_prof, $id_prof));
             unset($_POST);
             header("location: ajouts_prof.php");
         } catch (PDOException $e) {
@@ -471,10 +513,10 @@ function afficheProf($db)
     }
 }
 
-function afficheProfEdit($db,$id_prof)
+function afficheProfEdit($db, $id_prof)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_professeur` WHERE `ID_prof`= '".$id_prof."' ");
+        $req = $db->query("SELECT * FROM `tb_professeur` WHERE `ID_prof`= '" . $id_prof . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -482,10 +524,11 @@ function afficheProfEdit($db,$id_prof)
     }
 }
 
-function afficheProfCours($db,$id_prof)
+
+function afficheProfInfos($db, $id_prof)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_professeur` WHERE `ID_prof`= '".$id_prof."' ");
+        $req = $db->query("SELECT * FROM `tb_cours` INNER JOIN tb_professeur ON tb_professeur.ID_prof = tb_cours.id_enseignat WHERE `ID_prof`= '" . $id_prof . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -493,10 +536,21 @@ function afficheProfCours($db,$id_prof)
     }
 }
 
-function deleteProf($db,$id_prof)
+function afficheProfCours($db, $id_prof)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_professeur` WHERE `ID_prof` = '".$id_prof."' ");
+        $req = $db->query("SELECT * FROM `tb_professeur` WHERE `ID_prof`= '" . $id_prof . "' ");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function deleteProf($db, $id_prof)
+{
+    try {
+        $req = $db->query("DELETE FROM `tb_professeur` WHERE `ID_prof` = '" . $id_prof . "' ");
         header("location: listes_prof.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -506,21 +560,21 @@ function deleteProf($db,$id_prof)
 
 // ============================================================================= COURS ==================================================================
 
-function saveCours($db,$cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$designation_cours,$code_cours)
+function saveCours($db, $cotetotal_cour, $nbHeur_cour, $id_enseignat, $iD_classes, $id_option, $designation_cours, $code_cours)
 {
     try {
         $req = $db->prepare("INSERT INTO `tb_cours`(`cotetotal_cour`, `nbHeur_cour`, `id_enseignat`, `ID_classes`, `id_option`, `code_cours`, `designation_cours`) VALUES (?,?,?,?,?,?,?)");
-        $req->execute(array($cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$code_cours,$designation_cours));
+        $req->execute(array($cotetotal_cour, $nbHeur_cour, $id_enseignat, $iD_classes, $id_option, $code_cours, $designation_cours));
         header("location: ajouter_cours.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
-function deleteCours($db,$id_prof)
+function deleteCours($db, $id_prof)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_cours` WHERE `ID_cours` = '".$id_prof."' ");
+        $req = $db->query("DELETE FROM `tb_cours` WHERE `ID_cours` = '" . $id_prof . "' ");
         header("location: cours.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -538,10 +592,10 @@ function afficheCours($db)
     }
 }
 
-function afficheCouredit($db,$id_cours)
+function afficheCouredit($db, $id_cours)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_cours` INNER JOIN tb_option ON tb_option.ID_option = tb_cours.id_option JOIN tb_section ON tb_section.ID_section = tb_option.id_section JOIN tb_classes ON tb_classes.ID_classes = tb_cours.ID_classes JOIN tb_professeur ON tb_professeur.ID_prof = tb_cours.id_enseignat WHERE `ID_cours`='".$id_cours."' ");
+        $req = $db->query("SELECT * FROM `tb_cours` INNER JOIN tb_option ON tb_option.ID_option = tb_cours.id_option JOIN tb_section ON tb_section.ID_section = tb_option.id_section JOIN tb_classes ON tb_classes.ID_classes = tb_cours.ID_classes JOIN tb_professeur ON tb_professeur.ID_prof = tb_cours.id_enseignat WHERE `ID_cours`='" . $id_cours . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -549,11 +603,11 @@ function afficheCouredit($db,$id_cours)
     }
 }
 
-function coursEdit($db,$cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$code_cours,$designation_cours,$id_cour)
+function coursEdit($db, $cotetotal_cour, $nbHeur_cour, $id_enseignat, $iD_classes, $id_option, $code_cours, $designation_cours, $id_cour)
 {
     try {
         $req = $db->prepare("UPDATE `tb_cours` SET `cotetotal_cour`=?,`nbHeur_cour`=?,`id_enseignat`=?,`ID_classes`=?,`id_option`=?,`code_cours`=?,`designation_cours`=? WHERE `ID_cours`=?");
-        $req->execute(array($cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$id_option,$code_cours,$designation_cours,$id_cour));
+        $req->execute(array($cotetotal_cour, $nbHeur_cour, $id_enseignat, $iD_classes, $id_option, $code_cours, $designation_cours, $id_cour));
         header("location: cours.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -561,7 +615,7 @@ function coursEdit($db,$cotetotal_cour,$nbHeur_cour,$id_enseignat,$iD_classes,$i
 }
 
 // ==================================================================== PERIODE =======================================================================
-function savePeriode($db,$epreuve)
+function savePeriode($db, $epreuve)
 {
     try {
         $req = $db->prepare("INSERT INTO `tb_periode`(`periode`) VALUES (?)");
@@ -572,10 +626,10 @@ function savePeriode($db,$epreuve)
     }
 }
 
-function affichePeriodEdit($db,$id_periode)
+function affichePeriodEdit($db, $id_periode)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_periode` WHERE `id_periode`= '".$id_periode."' ");
+        $req = $db->query("SELECT * FROM `tb_periode` WHERE `id_periode`= '" . $id_periode . "' ");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -595,21 +649,21 @@ function affichePeriode($db)
     }
 }
 
-function periodEdit($db,$id_periode,$periode)
+function periodEdit($db, $id_periode, $periode)
 {
     try {
         $req = $db->prepare("UPDATE `tb_periode` SET `periode`=? WHERE `id_periode`=?");
-        $req->execute(array($periode,$id_periode));
+        $req->execute(array($periode, $id_periode));
         header("location: periode.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
-function deletPeriode($db,$id_periode)
+function deletPeriode($db, $id_periode)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_periode` WHERE `id_periode`='".$id_periode."'");
+        $req = $db->query("DELETE FROM `tb_periode` WHERE `id_periode`='" . $id_periode . "'");
         header("location: periode.php");
     } catch (Exception $e) {
         $e->getMessage();
@@ -618,7 +672,7 @@ function deletPeriode($db,$id_periode)
 
 
 // ==================================================================== EPREUVE =======================================================================
-function saveEpreuve($db,$epreuve)
+function saveEpreuve($db, $epreuve)
 {
     try {
         $req = $db->prepare("INSERT INTO `tb_epreuve`(`epreuve`) VALUES (?)");
@@ -629,10 +683,10 @@ function saveEpreuve($db,$epreuve)
     }
 }
 
-function afficheEpreuvedit($db,$id_epreuve)
+function afficheEpreuvedit($db, $id_epreuve)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_epreuve` WHERE `Id_epreuve`='".$id_epreuve."'");
+        $req = $db->query("SELECT * FROM `tb_epreuve` WHERE `Id_epreuve`='" . $id_epreuve . "'");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -652,24 +706,23 @@ function afficheEpreuve($db)
     }
 }
 
-function epreuvedit($db,$id_epreuve,$epreuve)
+function epreuvedit($db, $id_epreuve, $epreuve)
 {
     try {
         $req = $db->prepare("UPDATE `tb_epreuve` SET `epreuve`=? WHERE `Id_epreuve`=?");
-        $req->execute(array($epreuve,$id_epreuve));
+        $req->execute(array($epreuve, $id_epreuve));
         header("location: epreuve.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
 
-function deletEpreuve($db,$id_epreuve)
+function deletEpreuve($db, $id_epreuve)
 {
     try {
-        $req = $db->query("DELETE FROM `tb_epreuve` WHERE `Id_epreuve` = '".$id_epreuve."' ");
+        $req = $db->query("DELETE FROM `tb_epreuve` WHERE `Id_epreuve` = '" . $id_epreuve . "' ");
         header("location: epreuve.php");
     } catch (Exception $e) {
         $e->getMessage();
     }
 }
-

@@ -51,7 +51,7 @@
                                         <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
                                             <a href="suppression.php?action=suppression&classe=<?php echo $classe->ID_classes ?>" ><i class="fas fa-trash-alt"></i></a>
                                         </button>
-                                        <a href="ajouts_classes.php?action=edit&cour=<?php echo $cour->ID_classes ?>" class="w-4 transform hover:text-blue-500 hover:scale-110">
+                                        <a href="consulter_classes.php" class="w-4 transform hover:text-blue-500 hover:scale-110">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </div>

@@ -320,7 +320,7 @@ session_start();?>
                             <label class="block text-gray-700 font-bold mb-2 flex items-center" for="option">
                                 <i class="fas fa-graduation-cap mr-2"></i> Annee
                             </label>
-                            <?php $annees = AfficheAnnee($db);   ?>
+                            <?php $annees = AfficheAnneePasser($db);   ?>
                             <select  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="anneInscription" id="option" required>
                             
                                 <?php foreach ($annees as $annee) {  ?>

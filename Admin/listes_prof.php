@@ -65,7 +65,7 @@
                                             <a href="suppression.php?actions=supprimer&prof=<?php echo $prof->ID_prof;  ?>" class="w-4 mr-2 transform hover:text-blue-500 hover:scale-110">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a> 
-                                            <a  href="infos_prof.php" class="w-4 mr-2 transform hover:text-blue-500 hover:scale-110">
+                                            <a  href="infos_prof.php?action=consulter&prof=<?php echo $prof->ID_prof;  ?>" class="w-4 mr-2 transform hover:text-blue-500 hover:scale-110">
                                                 <i class="fas fa-eye"></i></a>
                                             </a>
                                         </div>
