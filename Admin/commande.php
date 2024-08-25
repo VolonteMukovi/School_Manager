@@ -570,6 +570,19 @@ function deleteProf($db, $id_prof)
 }
 
 
+function countPofesseur($db)
+{
+    try {
+        $annee = "Annee en cours";
+        $req = $db->query("SELECT COUNT(*) AS nbrProf FROM `tb_professeur`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
 // ============================================================================= COURS ==================================================================
 
 function saveCours($db, $cotetotal_cour, $nbHeur_cour, $id_enseignat, $iD_classes, $id_option, $designation_cours, $code_cours)
@@ -621,6 +634,18 @@ function coursEdit($db, $cotetotal_cour, $nbHeur_cour, $id_enseignat, $iD_classe
         $req = $db->prepare("UPDATE `tb_cours` SET `cotetotal_cour`=?,`nbHeur_cour`=?,`id_enseignat`=?,`ID_classes`=?,`id_option`=?,`code_cours`=?,`designation_cours`=? WHERE `ID_cours`=?");
         $req->execute(array($cotetotal_cour, $nbHeur_cour, $id_enseignat, $iD_classes, $id_option, $code_cours, $designation_cours, $id_cour));
         header("location: cours.php");
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+
+function courCount($db)
+{
+    try {
+        $req = $db->query("SELECT COUNT(*) AS nbrCours FROM `tb_cours`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
     } catch (Exception $e) {
         $e->getMessage();
     }
