@@ -30,7 +30,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6 cursor-pointer">
                     <div class="bg-gray-400 text-white p-4 shadow-md ml-2">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-2xl font-bold">231</h3>
+                            <?php    $nbrEleve = countEleve($db);
+                            foreach($nbrEleve as $eleve)
+                            {
+                                $nbreEleve = $eleve->nbrEleve;
+                            }
+                            ?>
+                            <h3 class="text-2xl font-bold"><?php  echo $nbreEleve;    ?></h3>
                             <i class="fas fa-user-graduate text-4xl"></i>
                         </div>
                         <p class="mt-2 text-lg font-semibold">Élèves inscrits</p>

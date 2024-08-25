@@ -77,7 +77,7 @@ function editAnne($db, $anne, $status, $id)
 function AfficheAnnee($db)
 {
     try {
-        $req = $db->query("SELECT * FROM `tb_annee_scholaire ORDER BY `annee` DESC");
+        $req = $db->query("SELECT * FROM `tb_annee_scholaire` ORDER BY `annee` DESC");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
@@ -244,6 +244,18 @@ function AfficheAnneePasserEleve($db, $annee, $status)
 {
     try {
         $req = $db->query("SELECT * FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_annee_scholaire.annee ='" . $annee . "' AND `status`='" . $status . "'");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
+function countEleve($db)
+{
+    try {
+        $annee = "Annee en cours";
+        $req = $db->query("SELECT COUNT(*) AS nbrEleve FROM tb_inscription JOIN tb_eleve ON tb_inscription.id_eleve_inscript = tb_eleve.ID_eleve JOIN tb_classes ON tb_inscription.id_classes_inscript = tb_classes.ID_classes JOIN tb_annee_scholaire ON tb_inscription.anneeScholair_inscript = tb_annee_scholaire.ID_anne_scholaire JOIN tb_option ON tb_classes.id_option = tb_option.ID_option JOIN tb_section ON tb_option.id_section = tb_section.ID_section WHERE tb_annee_scholaire.status = '".$annee."'");
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         return $data;
     } catch (Exception $e) {
