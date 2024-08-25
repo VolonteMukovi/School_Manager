@@ -67,7 +67,13 @@
                     </div>
                     <div class="bg-gray-700 text-white p-4 rounded-lg shadow-md mr-3 cursor-pointer">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-2xl font-bold">7</h3>
+                        <?php
+                            $nbrOption = countOption($db);
+                            foreach ($nbrOption  as $option) {
+                                $options = $option->nbrOption;
+                            }
+                            ?>
+                            <h3 class="text-2xl font-bold"><?php echo $options;   ?></h3>
                             <i class="fas fa-stream text-4xl"></i>
                         </div>
                         <p class="mt-2 text-lg font-semibold">Options disponibles</p>

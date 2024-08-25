@@ -380,6 +380,17 @@ function optionDelete($db, $id_section)
     }
 }
 
+function countOption($db)
+{
+    try {
+        $req = $db->query("SELECT COUNT(*) AS nbrOption FROM `tb_option`");
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
+
 // ==================================================================== SECTIONS ===============================================================
 function saveSection($db, $designation_section)
 {
